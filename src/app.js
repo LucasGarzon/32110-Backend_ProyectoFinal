@@ -1,9 +1,9 @@
 import express from "express";
-import loader from "./config/index.js";
+import initDB from './config/mongo.js'
 //routes
 import { productRouter } from "./routes/product.router.js";
 
-loader.start();
+initDB();
 
 const app = express();
 const PORT = parseInt(process.argv.slice(2)) || 8080;

@@ -4,7 +4,7 @@ dotenv.config();
 
 const uri = process.env.USER_URI || "mongodb://localhost:27017/proyectoFinal";
 
-export default async function startDB() {
+export default async function initDB() {
   try {
     await mongoose.set('strictQuery', false)
     await mongoose.connect(uri);
