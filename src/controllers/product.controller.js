@@ -5,7 +5,7 @@ const productService = new ProductService();
 export const getAllProducts = async (req, res) => {
   try {
     const products = await productService.getAllProducts();
-    if (products.length === 0) return res.status(200).json({ message: "BD don't have any product"});
+    if (products.length === 0) return res.status(200).json({ message: "BD don't have any Product"});
     res.status(200).json(products);
   } catch (error) {
     res.status(404).json({ message: error.message });
