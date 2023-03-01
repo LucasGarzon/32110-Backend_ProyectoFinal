@@ -12,7 +12,7 @@ export const getAllProducts = async (req, res) => {
   }
 };
 
-export const getPrroductById = async (req, res) => {
+export const getProductById = async (req, res) => {
   const { id } = req.params;
   try {
     const product = await productService.getProductById(id);
@@ -25,6 +25,20 @@ export const getPrroductById = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
+
+export const getProductCategory = async (req, res) => {
+  const { category } = req.params;
+  try {
+    const products = await productService.getProductCategory(category)
+    if (products.length === 0) {
+      res.status(200).json({ message: `There are no products in this category` });
+    } else {
+      res.status(200).json(products);
+    }
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+}
 
 export const createProduct = async (req, res) => {
   try {

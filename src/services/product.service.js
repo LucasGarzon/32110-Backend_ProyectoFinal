@@ -9,6 +9,10 @@ class ProductService {
     return await Product.findById(id);
   }
 
+  async getProductCategory(category) {
+    return await Product.find({ category });
+  }
+
   async createProduct(productData) {
     return await Product.create(productData);
   }

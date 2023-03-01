@@ -21,8 +21,9 @@ const ProductSchema = new Schema({
     require: true,
   },
   category: {
-    type: String, 
+    type: Number, 
     require: true,
+    default: 1,
   },
   thumbnail: {
     type: String,

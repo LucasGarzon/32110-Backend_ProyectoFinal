@@ -13,5 +13,5 @@ const server = app.listen(PORT, () => console.log(`Server up on port ${PORT}`));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/products", productRouter);
+app.use("/productos", productRouter);
 app.use("/", userRouter);
