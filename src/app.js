@@ -1,8 +1,9 @@
 import express from "express";
 import initDB from './config/mongo.js'
 //routes
-import { productRouter } from "./routes/product.router.js";
 import { userRouter } from "./routes/user.router.js";
+import { productRouter } from "./routes/product.router.js";
+import { cartRouter } from "./routes/cart.router.js";
 
 initDB();
 
@@ -13,5 +14,6 @@ const server = app.listen(PORT, () => console.log(`Server up on port ${PORT}`));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/productos", productRouter);
 app.use("/", userRouter);
+app.use("/productos", productRouter);
+app.use("/carrito", cartRouter);

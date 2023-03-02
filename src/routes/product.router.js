@@ -4,8 +4,8 @@ import { getAllProducts, getProductById, createProduct, updateProduct, deletePro
 const router = Router();
 
 router.get('/', getAllProducts)
-// router.get('/:id', getProductById)
-router.get('/:category', getProductCategory)
+router.get('/:id', getProductById)
+router.get('/categoria/:category', getProductCategory)
 router.post('/', createProduct)
 router.put('/:id', updateProduct)
 router.delete('/:id', deleteProduct)
