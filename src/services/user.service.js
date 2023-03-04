@@ -1,7 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 
-class UserService {
+export default class UserService {
   async createUser(user) {
     const { email, first_name, last_name, password, address } = user;
     const userExists = await User.exists({ email });
@@ -33,4 +33,3 @@ class UserService {
   }
 }
 
-export default UserService;

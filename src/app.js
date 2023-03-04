@@ -4,6 +4,7 @@ import initDB from './config/mongo.js'
 import { userRouter } from "./routes/user.router.js";
 import { productRouter } from "./routes/product.router.js";
 import { cartRouter } from "./routes/cart.router.js";
+import { orderRouter } from "./routes/order.router.js";
 
 initDB();
 
@@ -17,3 +18,4 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/", userRouter);
 app.use("/productos", productRouter);
 app.use("/carrito", cartRouter);
+app.use("/ordenes", orderRouter);

@@ -1,6 +1,6 @@
 import Product from "../models/product.model.js";
 
-class ProductService {
+export default class ProductService {
   async getAllProducts() {
     return await Product.find();
   }
@@ -30,4 +30,3 @@ class ProductService {
   }
 }
 
-export default ProductService;

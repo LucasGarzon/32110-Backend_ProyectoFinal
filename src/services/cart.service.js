@@ -1,7 +1,7 @@
 import Cart from "../models/cart.model.js";
 import User from "../models/user.model.js"
 
-class CartService {
+export default class CartService {
   async getAllCarts() {
     return await Cart.find();
   }
@@ -45,8 +45,10 @@ class CartService {
   }
 
   async deleteCart(userEmail) {
+    const result = await Cart.findOne({ email: userEmail });
+    if (!result) throw new Error(`Cart of user '${id}' not found`)
     return await Cart.findOneAndRemove( { email: userEmail });
   }
 }
 
-export default CartService;
+
