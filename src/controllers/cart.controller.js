@@ -33,7 +33,7 @@ export const addToCart = async (req, res) => {
   const { userEmail, productId } = req.body;
   try {
     const result = await cartService.addToCart(userEmail, productId)
-    res.status(200).json(result);
+    res.status(200).redirect('/dashboard');
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

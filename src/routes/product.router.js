@@ -4,7 +4,7 @@ import { logChecker } from "../controllers/user.controller.js";
 
 const router = Router();
 
-router.get('/', logChecker, getAllProducts)
+router.get('/', getAllProducts)
 router.get('/:id', getProductById)
 router.get('/categoria/:category', getProductCategory)
 router.post('/', createProduct)
