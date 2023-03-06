@@ -7,12 +7,8 @@
   <title>Proyecto Final | Error</title>
 </head>
 <body>
-  <h1>Error:</h1>
-  <p><%= message %></p>
+  <h1 style="color: red;">Error:</h1>
+  <p><%- message %></p>
+  <a href="/productos">Back</a>
 </body>
-<script>
-  setTimeout(() => {
-    location.href = '/signup'
-  }, 2000);
-</script>
 </html>
