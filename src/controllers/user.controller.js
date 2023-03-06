@@ -1,13 +1,15 @@
 import UserService from "../services/user.service.js";
+import passport from "passport";
+import "../services/authentication/localStrategy.js";
 
 const userService = new UserService();
 
 export const createUser = async (req, res) => {
   try {
     const newUser = await userService.createUser(req.body);
-    res.status(201).json(newUser);
+    res.status(201).redirect('/login')
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).render('error', { message: error.message });
   }
 };
 
@@ -47,3 +49,25 @@ export const deleteUser = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+export const logChecker = (req, res, next) => {
+  if (req.isAuthenticated()) return next()
+  res.redirect('/login')
+};
+
+export const userAuth = (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) { 
+      return next(err); 
+    }
+    if (!user) { 
+      return res.render('error', { message: info.message }); 
+    }
+    req.logIn(user, (err) => {
+      if (err) { 
+        return next(err); 
+      }
+      return res.redirect('/productos');
+    });
+  })(req, res, next);
+}
