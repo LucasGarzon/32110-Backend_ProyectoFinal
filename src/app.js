@@ -1,6 +1,7 @@
 import express from "express";
 import initDB from './config/mongo.js';
 import cookieParser from "cookie-parser";
+import passport from "passport";
 import { getSessionConfig} from "./services/session.service.js";
 //routes
 import { userRouter } from "./routes/user.router.js";
@@ -20,6 +21,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser())
 app.use(getSessionConfig());
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.set('views', 'src/views');
 app.set('view engine', 'ejs');

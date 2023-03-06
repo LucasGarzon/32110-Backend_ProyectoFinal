@@ -1,9 +1,10 @@
 import { Router } from "express";
 import { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct, getProductCategory } from "../controllers/product.controller.js";
+import { logChecker } from "../controllers/user.controller.js";
 
 const router = Router();
 
-router.get('/', getAllProducts)
+router.get('/', logChecker, getAllProducts)
 router.get('/:id', getProductById)
 router.get('/categoria/:category', getProductCategory)
 router.post('/', createProduct)

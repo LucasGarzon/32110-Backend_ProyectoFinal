@@ -71,3 +71,12 @@ export const userAuth = (req, res, next) => {
     });
   })(req, res, next);
 }
+
+export const userLogOut = (req, res, next) => {
+  req.logout(function(err) {
+    if (err) {
+      return next(err)
+    }
+    res.redirect('/login');
+  });
+};
