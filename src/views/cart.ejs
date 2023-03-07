@@ -27,6 +27,9 @@
       </div>
       <br>
     <% }) %>
+    <form id="delete-cart-form">
+      <button type="button" id="delete-cart-button">Vaciar Carrito</button>
+    </form>
     <form action="/ordenes" method="post">
       <input type="hidden" name="email" value="<%= user.email %>">
       <button type="submit">Confirmar Compra</button>
@@ -34,5 +37,23 @@
     <h2>Total: $<%= userCart.total %></h2>
   <% } %>
   <a href="/productos">Volver al Dashboard</a>
+  <script>
+    const userEmail = "<%= user.email %>";
+    const deleteCartForm = document.getElementById("delete-cart-form");
+    const deleteCartBtn = document.getElementById("delete-cart-button");
+
+    deleteCartBtn.addEventListener("click", async () => {
+      try {
+        const response = await fetch(`/carrito/${userEmail}`, { method: "DELETE" });
+        if (response.ok) {
+          window.location.reload()
+        } else {
+          console.error(`Delete cart failed: ${response.statusText}`)
+        }
+      } catch (error) {
+        console.error(`Delete cart failed: ${error}`)
+      }
+    });
+  </script>
 </body>
 </html>

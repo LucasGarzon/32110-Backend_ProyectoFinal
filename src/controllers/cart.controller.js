@@ -40,13 +40,14 @@ export const addToCart = async (req, res) => {
 };
 
 export const deleteCart = async (req, res) => {
-  const { userEmail } = req.body;
+  // const { userEmail } = req.body;
+  // console.log(req.user.email);
   try {
-    const result = await cartService.deleteCart(userEmail)
+    const result = await cartService.deleteCart(req.user.email)
     if (!result) {
       return res.status(404).json({ message: "Cart not found" });
     } else {
-      res.status(200).json({ message: "Cart deleted successfully" });
+      res.status(200).redirect(303, '/carrito');
     }    
   } catch (error) {
     res.status(404).json({ message: error.message });

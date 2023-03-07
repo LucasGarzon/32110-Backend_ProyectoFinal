@@ -1,6 +1,8 @@
 import OrderService from "../services/order.service.js";
 import transporter from "../services/mailer.service.js";
+import * as dotenv from "dotenv";
 
+dotenv.config();
 const orderSevice = new OrderService();
 
 export const getAllOrders = async (req, res) => {
@@ -25,7 +27,7 @@ export const createOrder = async (req, res) => {
       products += `<li>${prod.quantity} X ${prod.product}____$${prod.price}</li>`; 
     }
     await transporter.sendMail({
-      from: 'lucasgarzonm@gmail.com',
+      from: process.env.ADMIN_MAIL,
       to: email,
       subject: `¡Tienes una orden de compra de ${req.user.first_name} ${req.user.last_name}!`,
       html: `

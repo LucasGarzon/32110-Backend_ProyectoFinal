@@ -12,7 +12,7 @@
     <div class="mx-auto col-lg-4">
       <div class="alert alert-dark">
         <h1 class="text-center mb-3">Sign-up</h1>
-        <form autocomplete="off" action="/" method="post">
+        <form autocomplete="off" action="/" method="post" name="myForm" onsubmit="return validateForm()">
           <div class="form-group">
               <label class="mb-1">Email: *</label>
               <input class="form-control" required type="text" name="email"/>
@@ -33,11 +33,15 @@
               <label class="mb-1">Password: *</label>
               <input class="form-control" required type="password" name="password"/>
           </div>
+          <div class="form-group">
+              <label class="mb-1">Confirm Password: *</label>
+              <input class="form-control" required type="password" name="confirm_password"/>
+          </div>
           <div class="d-flex flex-column flex-lg-row justify-content-between">
-              <div class="form-group m-3">
-                <input class="btn btn-dark" type="submit" value="Create User"/>
+              <div class="form-group mt-3 mb-3">
+                <input type="submit" class="btn btn-dark" value="Create User"/>
               </div>
-              <div class="form-group m-3">
+              <div class="form-group mt-3 mb-3">
                 <a href="/login">
                     <button type="button" class="btn btn-outline-success">I already have a user</button>
                 </a>
@@ -47,5 +51,17 @@
     </div>          
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+  <script>
+    function validateForm(){
+      let password = document.forms["myForm"]["password"].value;
+      let confirmPassword = document.forms["myForm"]["confirm_password"].value;
+      if (password !== confirmPassword) {
+        alert("Las contraseñas deben coincidir");
+        return false;
+      } else {
+        return true;
+      }
+    }
+  </script>
 </body>
 </html>
