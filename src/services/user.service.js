@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 
 export default class UserService {
   async createUser(user) {
-    const { email, first_name, last_name, password, address } = user;
+    const { email, first_name, last_name, password, phone, address } = user;
     const userExists = await User.exists({ email });
     if (userExists) throw new Error(`${email} already exists`);
     const hash = await bcrypt.hash(password, 12);
@@ -11,8 +11,9 @@ export default class UserService {
       email,
       first_name,
       last_name,
-      password: hash,
       address,
+      phone,  
+      password: hash,
     });
   }
 

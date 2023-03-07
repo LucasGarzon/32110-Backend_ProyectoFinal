@@ -7,7 +7,15 @@ const userService = new UserService();
 
 export const createUser = async (req, res) => {
   try {
-    const newUser = await userService.createUser(req.body);
+    const { email, first_name, last_name, address, phone, password } = req.body;
+    const newUser = await userService.createUser({
+      email,
+      first_name,
+      last_name,
+      address,
+      phone: parseInt(phone), 
+      password,
+    });
     res.status(201).redirect('/login')
   } catch (error) {
     res.status(400).render('error', { message: error.message });
