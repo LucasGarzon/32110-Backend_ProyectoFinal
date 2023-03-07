@@ -15,7 +15,8 @@
     <% userCart.items.forEach(product => { %>
       <div style="border: 2px solid #000000;">
         <ul style="list-style: none;">
-          <li>Producto: <%= product.id %></li> 
+          <li>Producto: <%= product.product %></li> 
+          <li>Precio: $<%= product.price %></li> 
           <li>Cantidad: <%= product.quantity %></li> 
         </ul>
         <form action="/carrito/remove" method="post">
@@ -27,6 +28,7 @@
       <br>
     <% }) %>
   <% } %>
+  <h2>Total: <%= userCart.total %>$</h2>
   <a href="/productos">Volver al Dashboard</a>
 </body>
 </html>

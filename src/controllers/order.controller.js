@@ -1,4 +1,6 @@
 import OrderService from "../services/order.service.js";
+import nodemailer from 'nodemailer';
+import transporter from "../services/mailer.service.js";
 
 const orderSevice = new OrderService();
 
@@ -18,6 +20,12 @@ export const getAllOrders = async (req, res) => {
 export const createOrder = async (req, res) => {
   const { email } = req.body;
   try {
+    await transporter.sendMail({
+      from: 'lucasgarzonm@gmail.com',
+      to: email,
+      subject: 'Confirmación de orden',
+      text: ``,
+    });
     res.status(200).json(await orderSevice.createOrder(email));
   } catch (error) {
     res.status(404).json({ message: error.message });

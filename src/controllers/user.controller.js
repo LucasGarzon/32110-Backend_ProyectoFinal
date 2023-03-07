@@ -1,6 +1,5 @@
 import UserService from "../services/user.service.js";
 import passport from "passport";
-import axios from "axios";
 import "../services/authentication/localStrategy.js";
 
 

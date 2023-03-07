@@ -1,5 +1,6 @@
 import Cart from "../models/cart.model.js";
-import User from "../models/user.model.js"
+import User from "../models/user.model.js";
+import Product from "../models/product.model.js"
 
 export default class CartService {
   async getAllCarts() {
@@ -13,15 +14,17 @@ export default class CartService {
   async addToCart(userEmail, productId) {
     const result = await Cart.findOne({ email: userEmail });
     const user = await User.findOne({ email: userEmail });
+    const product = await Product.findById(productId);
     if (!user) throw new Error(`Email ${userEmail} doesn't exists`);
+    if (!product) throw new Error(`Product id '${userEmail}' doesn't exists`)
     if (!result) {
-      return await Cart.create({ email: user.email, items: [{ productId, quantity: 1}], address: user.address})
+      return await Cart.create({ email: user.email, items: [{ productId, product: product.title, quantity: 1, price: product.price}], total: product.price, address: user.address})
     } else {
       const itemIndex = result.items.findIndex(item => item.productId.toString() === productId.toString());
       if (itemIndex >= 0) {
         result.items[itemIndex].quantity++;
       } else {
-        result.items.push({ productId, quantity: 1 });
+        result.items.push({ productId, product: product.title, quantity: 1, price: product.price});
       };
       await result.save();
       return result;
