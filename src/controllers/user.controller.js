@@ -52,11 +52,6 @@ export const deleteUser = async (req, res) => {
   }
 };
 
-export const userDashboard = async (req, res) => {
-  const response = await axios.get(`${req.protocol}://${req.get('host')}/productos`);
-  res.render('dashboard', {user: req.user, products: response.data})
-}
-
 export const logChecker = (req, res, next) => {
   if (req.isAuthenticated()) return next()
   res.redirect('/login')
@@ -74,7 +69,7 @@ export const userAuth = (req, res, next) => {
       if (err) { 
         return next(err); 
       }
-      return res.redirect('/dashboard');
+      return res.redirect('/productos');
     });
   })(req, res, next);
 }

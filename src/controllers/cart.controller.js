@@ -15,14 +15,14 @@ export const getAllCarts = async (req, res) => {
   }
 }; 
 
-export const getCartById = async (req, res) => {
-  const { id } = req.params;
+export const getCartByEmail = async (req, res) => {
+  const { email } = req.params;
   try {
-    const result = await cartService.getCartById(id);
+    const result = await cartService.getCartById(email);
     if (!result) {
-      res.status(404).json({ message: "Cart not found" });
+      res.status(200).render('cart', {user: req.user, userCart: false})
     } else {
-      res.status(200).json(result);
+      res.status(200).render('cart', {user: req.user, userCart: result})
     }
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -33,7 +33,7 @@ export const addToCart = async (req, res) => {
   const { userEmail, productId } = req.body;
   try {
     const result = await cartService.addToCart(userEmail, productId)
-    res.status(200).redirect('/dashboard');
+    res.status(200).redirect('/productos');
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -57,7 +57,7 @@ export const removeItem = async (req, res) => {
   const { userEmail, productId } = req.body;
   try {
     const result = await cartService.removeFromCart(userEmail, productId)
-    res.status(200).json(result);
+    res.status(200).redirect(`/carrito/${userEmail}`);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

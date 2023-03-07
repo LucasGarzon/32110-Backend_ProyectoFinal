@@ -6,8 +6,8 @@ export default class CartService {
     return await Cart.find();
   }
 
-  async getCartById(id) {
-    return await Cart.findById(id);
+  async getCartById(userEmail) {
+    return await Cart.findOne({ email: userEmail });
   }
 
   async addToCart(userEmail, productId) {

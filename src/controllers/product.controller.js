@@ -8,7 +8,7 @@ export const getAllProducts = async (req, res) => {
     if (result.length === 0) {
       return res.status(200).json({ message: "BD don't have any Product" });
     } else {
-      res.status(200).json(result);
+      res.status(200).render('dashboard', {user: req.user, products: result})
     }
   } catch (error) {
     res.status(404).json({ message: error.message });
