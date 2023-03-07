@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto Final | Product</title>
+</head>
+<body>
+  <h1><%= product.title %></h1>
+  <h2>Precio: $<%= product.price %></h2>
+  <h3>Stock: <%= product.stock %> unidades</h3>
+  <p>Descripción: <%= product.description %></p>
+  <form action="/carrito" method="post">
+    <input type="hidden" name="userEmail" value=<%= user.email %>>
+    <input type="hidden" name="productId" value=<%= product._id %>>
+    <button type="submit">Añadir al carrito</button>
+  </form>
+  <a href="/productos">Volver a la tienda</a>
+</body>
+</html>
