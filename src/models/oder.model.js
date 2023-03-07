@@ -5,14 +5,29 @@ const { Schema } = mongoose;
 const OrderSchema = new Schema({
   items: [
     {
+      product: {
+        type: String,
+        required: true,
+      },
       productId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "products",
         required: true,
       },
-      quantity: { type: Number, default: 1 },
+      quantity: { 
+        type: Number ,
+        required: true,
+      },
+      price : { 
+        type: Number, 
+        required: true,
+      },
     },
   ],
+  total: {
+    type: Number,
+    required: true,
+  },
   orderNumber: {
     type: Number,
     required: true,

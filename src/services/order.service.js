@@ -14,6 +14,7 @@ export default class OrderService {
     const newOrder = await Order.create({
       email: cart.email,
       items: cart.items,
+      total: cart.total,
       orderNumber: await Order.countDocuments({}) + 1,
     });
     await Cart.findOneAndRemove( { email: cartEmail });

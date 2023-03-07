@@ -27,8 +27,12 @@
       </div>
       <br>
     <% }) %>
+    <form action="/ordenes" method="post">
+      <input type="hidden" name="email" value="<%= user.email %>">
+      <button type="submit">Confirmar Compra</button>
+    </form>
+    <h2>Total: $<%= userCart.total %></h2>
   <% } %>
-  <h2>Total: <%= userCart.total %>$</h2>
   <a href="/productos">Volver al Dashboard</a>
 </body>
 </html>
