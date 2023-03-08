@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto Final | Chat</title>
+</head>
+<body>
+  <h1>Canal de Chat</h1>
+  <% if (!messages || messages.length === 0) { %>
+    <p>No hay mensajes para mostrar</p>
+  <% } else { %>
+    <% messages.forEach(message => { %>
+      <ul style="border: 2px solid #000000;">
+        <li><span style="color: blue;">Usuario: </span> <%= message.email %></li>
+        <li><span style="color: blue;">Día: </span><%= message.timestamp.getDate() %>/<%= message.timestamp.getMonth() %>/<%= message.timestamp.getFullYear() %></li>
+        <li><span style="color: blue;">Hora: </span><%= message.timestamp.getHours() %>:<%= message.timestamp.getMinutes() %>hs</li>
+        <li><span style="color: blue;">Mensaje: </span><%= message.message %></li>
+      </ul>
+    <% }) %>
+  <% } %>
+  <form action="/chat" method="post">
+    <textarea name="message" cols="30" rows="10" placeholder="Escribe aqui..."></textarea>
+    <button type="sumbit">Enviar</button>
+  </form>
+  <a href="/productos">Volver a la tienda</a>
+</body>
+</html>

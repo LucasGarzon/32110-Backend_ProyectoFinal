@@ -10,6 +10,7 @@
 <body>
   <h1>Bienvenido <%= user.first_name %> <%= user.last_name %></h1>
   <h5>Dirección de entrega: <%= user.address %></h2>
+  <h5><a href="/chat">Canal de Chat</a></h5>
   <h2>Productos:</h2>
   <% products.forEach(product => { %>
     <div style="border: 2px solid #000000;" >
@@ -50,7 +51,7 @@
       try {
         const response = await fetch(`/${userId}`, { method: "DELETE" });
         if (response.ok) {
-          await window.location.reload()
+          window.location.reload()
         } else {
           console.error(`Delete cart failed: ${response.statusText}`)
         }

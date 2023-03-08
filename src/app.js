@@ -9,6 +9,7 @@ import { productRouter } from "./routes/product.router.js";
 import { cartRouter } from "./routes/cart.router.js";
 import { orderRouter } from "./routes/order.router.js";
 import { notFoundMiddleware } from "./middlewares/notFoundMiddleware.js";
+import { messageRouter } from "./routes/message.router.js";
 
 initDB();
 
@@ -32,4 +33,5 @@ app.use("/", userRouter);
 app.use("/productos", productRouter);
 app.use("/carrito", cartRouter);
 app.use("/ordenes", orderRouter);
+app.use("/chat", messageRouter);
 app.use(notFoundMiddleware)

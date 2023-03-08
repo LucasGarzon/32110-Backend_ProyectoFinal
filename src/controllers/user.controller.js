@@ -1,7 +1,6 @@
 import UserService from "../services/user.service.js";
 import passport from "passport";
 import CartService from "../services/cart.service.js";
-import { getSessionConfig  } from "../services/session.service.js"
 import "../services/authentication/localStrategy.js";
 
 
