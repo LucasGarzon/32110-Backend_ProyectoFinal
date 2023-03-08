@@ -18,7 +18,7 @@ export default class CartService {
     if (!user) throw new Error(`Email ${userEmail} doesn't exists`);
     if (!product) throw new Error(`Product id '${userEmail}' doesn't exists`)
     if (!result) {
-      return await Cart.create({ email: user.email, items: [{ productId, product: product.title, quantity: 1, price: product.price}], total: product.price, address: user.address})
+      return await Cart.create({ email: user.email, items: [{ productId, product: product.title, quantity: 1, price: product.price}], total: product.price, address: user.address, phone: user.phone})
     } else {
       const itemIndex = result.items.findIndex(item => item.productId.toString() === productId.toString());
       if (itemIndex >= 0) {

@@ -1,9 +1,12 @@
 import UserService from "../services/user.service.js";
 import passport from "passport";
+import CartService from "../services/cart.service.js";
+import { getSessionConfig  } from "../services/session.service.js"
 import "../services/authentication/localStrategy.js";
 
 
 const userService = new UserService();
+const cartService = new CartService();
 
 export const createUser = async (req, res) => {
   try {
@@ -48,11 +51,17 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
+    const userCart = await cartService.getCartById(req.user.email)
+    if (userCart) {
+      await cartService.deleteCart(req.user.email);
+    }
     const deletedUser = await userService.deleteUser(id);
     if (!deletedUser) {
       return res.status(404).json({ message: "User not found" });
     } else {
-      res.status(200).json({ message: "User deleted successfully" });
+      req.session.destroy(() => {
+        res.redirect(303, "/login");
+      });
     }
   } catch (error) {
     res.status(400).json({ message: error.message });

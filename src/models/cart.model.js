@@ -41,6 +41,10 @@ const cartSchema = new Schema({
     type: String,
     required: true,
   },
+  phone: {
+    type: Number,
+    required: true,
+  }
 });
 
 cartSchema.pre('save', async function(next) {

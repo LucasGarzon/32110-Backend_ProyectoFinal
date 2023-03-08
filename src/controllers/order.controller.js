@@ -43,6 +43,7 @@ export const createOrder = async (req, res) => {
           <li>Email: <span style="color:blue">${req.user.email}</span></li>
           <li>Nombre: <span style="color:blue">${req.user.first_name}</span></li>
           <li>Apellido: <span style="color:blue">${req.user.last_name}</span></li>
+          <li>Teléfono: <span style="color:blue">${req.user.phone}</span></li>
           <li>Dirección de entrega: <span style="color:blue">${req.user.address}</span></li>
         </ul>
       `,

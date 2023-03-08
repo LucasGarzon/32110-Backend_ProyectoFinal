@@ -33,6 +33,10 @@ const UserShema = new Schema({
     type: Date,
     default: Date.now,
   },
+  isAdming: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 UserShema.methods.comparePassword = function(password) {
