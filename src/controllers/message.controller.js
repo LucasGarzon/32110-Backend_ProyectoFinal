@@ -11,6 +11,11 @@ export const getAllMessages = async (req, res) => {
   }
 };
 
+export const getMessagesForSocket = async (socket) => {
+  let result = await messageService.getAllMessages()
+  socket.emit('messagesHistory', result)
+}
+
 export const createMessage = async (req, res) => {
   const { message } = req.body
   const { isAdmin , email } = req.user;
@@ -26,8 +31,8 @@ export const createMessage = async (req, res) => {
       userType,
       message,
     };
-    const result = await messageService.createMessage(newMessage)
-    res.status(200).redirect('/chat')
+    let result = await messageService.createMessage(newMessage)
+    res.status(200).json(result)
   } catch (error) {
     res.status(404).json({ message: error.message });
   }  

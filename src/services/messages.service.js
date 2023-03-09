@@ -10,6 +10,7 @@ export default class MessageService {
   }
 
   async createMessage(messageData) {
-    return await Message.create(messageData)
+    const newMessage = await Message.create(messageData)
+    return await Message.find();
   } 
 };
