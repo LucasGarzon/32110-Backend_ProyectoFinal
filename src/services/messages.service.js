@@ -6,7 +6,7 @@ export default class MessageService {
   }
 
   async getMessageByEmail(userEmail) {
-    return await Message.findOne({email: userEmail})
+    return await Message.find({email: userEmail})
   }
 
   async createMessage(messageData) {
