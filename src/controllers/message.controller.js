@@ -47,3 +47,13 @@ export const createMessage = async (req, res) => {
     res.status(404).json({ message: error.message });
   }  
 }
+
+export const adminResponse = async (req, res) => {
+  const {id, response} = req.body;
+  try {
+    let result = await messageService.responseMessage(id, response)
+    res.status(200).json(result)
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+}

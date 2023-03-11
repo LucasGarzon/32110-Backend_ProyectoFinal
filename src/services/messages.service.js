@@ -13,4 +13,11 @@ export default class MessageService {
     const newMessage = await Message.create(messageData)
     return await Message.find();
   } 
+
+  async responseMessage(id, response) {
+    const result = await Message.findById(id);
+    result.response = response
+    await result.save();
+    return await Message.find();
+  }
 };

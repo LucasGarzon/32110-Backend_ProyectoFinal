@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { addToCart, deleteCart, getAllCarts, getCartByEmail, removeItem } from "../controllers/cart.controller.js";
+import { logChecker } from "../controllers/user.controller.js";
 
 const router = new Router();
 
-router.get("/", getAllCarts);
-router.get("/:email", getCartByEmail);
+router.get("/", logChecker, getAllCarts);
+router.get("/:email", logChecker,getCartByEmail);
 router.post("/", addToCart);
 router.post("/remove", removeItem);
 router.delete("/:email", deleteCart);

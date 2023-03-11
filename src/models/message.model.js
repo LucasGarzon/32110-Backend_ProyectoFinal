@@ -18,6 +18,9 @@ const messageSchema = new Schema({
   message: {
     type: String,
     required: true,
+  },
+  response: {
+    type: String,
   }
 });
 

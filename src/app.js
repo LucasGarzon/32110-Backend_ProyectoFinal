@@ -39,6 +39,9 @@ io.on('connection', (socket) => {
   socket.on("chat", (data) => {
     io.emit("messagesHistory", data);
   });
+  socket.on("chatResponse", (data) => {
+    io.emit("messagesHistory", data);
+  });
 })
 
 app.use("/", userRouter);

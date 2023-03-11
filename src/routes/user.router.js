@@ -3,7 +3,6 @@ import { createUser, deleteUser, updateUser, userAuth, userLogOut, logChecker} f
 
 const router = new Router();
 
-// router.get("/dashboard", logChecker, userDashboard);
 router.post("/", createUser);
 router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);

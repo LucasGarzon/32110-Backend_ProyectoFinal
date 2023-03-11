@@ -7,14 +7,22 @@
   <title>Proyecto Final | Chat</title>
 </head>
 <body>
-  <h1>Canal de Chat</h1>
+  <% if (user.isAdmin === false) { %>
+    <h1>Canal de Chat</h1>
+  <% } else { %> 
+    <h1>Canal de Chat | ADMINISTRADOR</h1>
+  <% } %> 
   <br>
   <a href="/chat/<%= user.email %>">Ver solo mis mensajes</a>
   <br>
   <form id="messagesForm">
     <div id="messagesHistory">No hay mensajes para mostrar</div>
+    <input type="hidden" id="userType" value="<%= user.isAdmin %>">
+    <% if (user.isAdmin === false) { %>
+    <input type="hidden" name="_method" value="Escribe aqui...">
     <input type="text" name="message" placeholder="Escribe aqui...">
-    <input type="submit">  
+    <input type="submit"> 
+    <% } %> 
   </form>
   <a href="/productos">Volver a la tienda</a>
   <script src="/socket.io/socket.io.js"></script>
