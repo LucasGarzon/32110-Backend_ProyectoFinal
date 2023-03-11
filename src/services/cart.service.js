@@ -7,7 +7,7 @@ export default class CartService {
     return await Cart.find();
   }
 
-  async getCartById(userEmail) {
+  async getCartByEmail(userEmail) {
     return await Cart.findOne({ email: userEmail });
   }
 
@@ -15,6 +15,7 @@ export default class CartService {
     const result = await Cart.findOne({ email: userEmail });
     const user = await User.findOne({ email: userEmail });
     const product = await Product.findById(productId);
+    if (product.stock < 1 ) throw new Error(`This product don't have stock`);
     if (!user) throw new Error(`Email ${userEmail} doesn't exists`);
     if (!product) throw new Error(`Product id '${userEmail}' doesn't exists`)
     if (!result) {
@@ -22,6 +23,7 @@ export default class CartService {
     } else {
       const itemIndex = result.items.findIndex(item => item.productId.toString() === productId.toString());
       if (itemIndex >= 0) {
+        if (result.items[itemIndex].quantity === product.stock ) return ({message: "Superaste la cantidad del stock"})
         result.items[itemIndex].quantity++;
       } else {
         result.items.push({ productId, product: product.title, quantity: 1, price: product.price});

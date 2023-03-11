@@ -18,7 +18,7 @@ export const getAllCarts = async (req, res) => {
 export const getCartByEmail = async (req, res) => {
   const { email } = req.params;
   try {
-    const result = await cartService.getCartById(email);
+    const result = await cartService.getCartByEmail(email);
     if (!result) {
       res.status(200).render('cart', {user: req.user, userCart: false})
     } else {

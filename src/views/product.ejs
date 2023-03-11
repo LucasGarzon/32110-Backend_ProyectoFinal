@@ -9,7 +9,11 @@
 <body>
   <h1><%= product.title %></h1>
   <h2>Precio: $<%= product.price %></h2>
-  <h3>Stock: <%= product.stock %> unidades</h3>
+  <% if (product.stock === 0) { %>
+    <h3>Stock: <span style="color: red;">SIN STOCK</span></h3>
+    <% } else {%>
+    <h3>Stock: <%= product.stock %> unidades</h3>
+  <% } %>
   <p>Descripción: <%= product.description %></p>
   <form action="/carrito" method="post">
     <input type="hidden" name="userEmail" value=<%= user.email %>>

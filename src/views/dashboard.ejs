@@ -18,6 +18,11 @@
       <ul style="list-style: none;">
         <li>Producto: <%= product.title %></li> 
         <li>Precio: $<%= product.price %></li>
+        <% if (product.stock === 0) { %>
+        <li>Stock: <span style="color: red;">SIN STOCK</span></li>
+        <% } else {%>
+          <li>Stock: <%= product.stock %></li>
+        <% } %>
         <% if (product.category === 1) { %>
           <li>Categoría: Café de especialidad</li>
         <% } else if (product.category === 2) { %>
@@ -29,6 +34,9 @@
         <input type="hidden" name="productId" value=<%= product._id %>>
         <button type="submit">Añadir al carrito</button>
       </form>
+      <% if (message === 1) { %>
+        <p style="color: red">Superaste la cantidad en stock!</p>
+      <% } %>
       <li><a href="/productos/<%= product._id %>">Detalles del producto</a></li>
     </div>
     <br>

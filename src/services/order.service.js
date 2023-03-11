@@ -1,5 +1,6 @@
 import Order from "../models/oder.model.js";
 import Cart from "../models/cart.model.js";
+import Product from "../models/product.model.js";
 
 export default class OrderService {
   async getAllOrders() {
@@ -17,6 +18,12 @@ export default class OrderService {
       total: cart.total,
       orderNumber: await Order.countDocuments({}) + 1,
     });
+    for (const item in cart.items) {
+      let product = await Product.findById(cart.items[item].productId);
+      let quantity = cart.items[item].quantity;
+      product.stock = product.stock - quantity
+      product.save()
+    }
     await Cart.findOneAndRemove( { email: cartEmail });
     return newOrder
   }
