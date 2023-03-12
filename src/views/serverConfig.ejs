@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto Final | Server Config</title>
+</head>
+<body>
+  <h1>Configuración de servidor</h1>
+  <ul>
+    <li><span style="color: green;">Puerto de escucha del Servidor</span>: <%= serverInfo.serverPort %></li>
+    <li><span style="color: green;">URL de la base de datos</span>: <%= serverInfo.dataBaseURL %></li>
+    <li><span style="color: green;">Tiempo de expiración de la sesión</span>: <%= serverInfo.sessionTime %>min</li>
+    <li><span style="color: green;">Email para las notificaciones del BackEnd</span>: <%= serverInfo.adminEmail %></li>
+    <li><span style="color: green;">PID</span>: <%= serverInfo.pid %></li>
+    <li><span style="color: green;">Path</span>: <%= serverInfo.path %></li>
+    <li><span style="color: green;">Logical Processors</span>: <%= serverInfo.cpuCores %></li>
+  </ul>
+  <h2><a href="/productos">Volver al Index</a></h2>
+</body>
+</html>

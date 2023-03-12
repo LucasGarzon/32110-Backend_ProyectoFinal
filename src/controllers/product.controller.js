@@ -45,9 +45,16 @@ export const getProductCategory = async (req, res) => {
 };
 
 export const createProduct = async (req, res) => {
+  req.body.price = parseInt(req.body.price) 
+  req.body.stock = parseInt(req.body.stock) 
+  req.body.category = parseInt(req.body.category) 
   try {
     const newProduct = await productService.createProduct(req.body);
-    res.status(201).json(newProduct);
+    if (newProduct) {
+      res.status(201).redirect('/productos');
+    } else {
+      res.status(400).json({ message: "Error" });
+    }
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

@@ -8,8 +8,9 @@
   <title>Proyecto Final | Dashboard</title>
 </head>
 <body>
-  <h1>Bienvenido <%= user.first_name %> <%= user.last_name %></h1>
-  <h5>Dirección de entrega: <%= user.address %></h2>
+  <% if (user.isAdmin === true) { %>
+  <h1>Bienvenido <%= user.first_name %> <%= user.last_name %> | Administrador</h1>
+  <h5><a href="/config">Configuración del servidor</a></h2>
   <h5><a href="/chat">Canal de Chat</a></h5>
   <h2>Productos:</h2>
   <% products.forEach(product => { %>
@@ -29,20 +30,84 @@
           <li>Categoría: Brebaje</li>
         <% } %>
       </ul>
-      <form action="/carrito" method="post">
-        <input type="hidden" name="userEmail" value=<%= user.email %>>
-        <input type="hidden" name="productId" value=<%= product._id %>>
-        <button type="submit">Añadir al carrito</button>
-      </form>
       <% if (message === 1) { %>
         <p style="color: red">Superaste la cantidad en stock!</p>
       <% } %>
-      <li><a href="/productos/<%= product._id %>">Detalles del producto</a></li>
+      <li><a href="/productos/<%= product._id %>">Actualizaar producto</a></li>
     </div>
     <br>
   <% }) %>
-  <a href="/carrito/<%= user.email %>">Carrito</a>
   <br>
+  <div style="border: 2px solid #000000;">
+    <h2>Ingresar un nuevo producto</h2>
+    <form action="/productos" method="post">
+      <label for="name">Titulo:</label>
+      <input type="text" name="title" required>
+      <br>
+      <br>
+      <label for="price">precio:</label>
+      <input type="number" name="price" required>
+      <br>
+      <br>
+      <label for="stock">Stock:</label>
+      <input type="number" name="stock" required>
+      <br>
+      <br>
+      <label for="category">Categoría</label>
+      <select name="category" required>
+        <option value="1">Café de especialidad</option>
+        <option value="2">Brebaje</option>
+      </select>
+      <br>
+      <br>
+      <label for="thumbnail">URL de la imagen:</label>
+      <input type="text" name="thumbnail" required>
+      <br>
+      <br>
+      <label for="description">Descripción:</label>
+      <input type="textarea" name="description" required>
+      <br>
+      <br>
+      <button type="submit">Crear</button>
+    </form>
+    <br>
+  </div>
+  <% } else if (user.isAdmin === false) { %> 
+    <h1>Bienvenido <%= user.first_name %> <%= user.last_name %></h1>
+    <h5>Dirección de entrega: <%= user.address %></h2>
+    <h5><a href="/chat">Canal de Chat</a></h5>
+    <% products.forEach(product => { %>
+      <div style="border: 2px solid #000000;" >
+        <p>Imagen: <%= product.thumbnail %><p>
+        <ul style="list-style: none;">
+          <li>Producto: <%= product.title %></li> 
+          <li>Precio: $<%= product.price %></li>
+          <% if (product.stock === 0) { %>
+          <li>Stock: <span style="color: red;">SIN STOCK</span></li>
+          <% } else {%>
+            <li>Stock: <%= product.stock %></li>
+          <% } %>
+          <% if (product.category === 1) { %>
+            <li>Categoría: Café de especialidad</li>
+          <% } else if (product.category === 2) { %>
+            <li>Categoría: Brebaje</li>
+          <% } %>
+        </ul>
+        <form action="/carrito" method="post">
+          <input type="hidden" name="userEmail" value=<%= user.email %>>
+          <input type="hidden" name="productId" value=<%= product._id %>>
+          <button type="submit">Añadir al carrito</button>
+        </form>
+        <% if (message === 1) { %>
+          <p style="color: red">Superaste la cantidad en stock!</p>
+        <% } %>
+        <li><a href="/productos/<%= product._id %>">Detalles del producto</a></li>
+      </div>
+      <br>
+    <% }) %>
+    <a href="/carrito/<%= user.email %>">Carrito</a>
+    <br>
+  <% } %> 
   <a href="/logout">Cerar sesión</a> 
   <br>
   <br>

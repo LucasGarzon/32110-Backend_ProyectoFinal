@@ -15,11 +15,13 @@
     <h3>Stock: <%= product.stock %> unidades</h3>
   <% } %>
   <p>Descripción: <%= product.description %></p>
+  <% if (user.isAdmin === false) { %>
   <form action="/carrito" method="post">
     <input type="hidden" name="userEmail" value=<%= user.email %>>
     <input type="hidden" name="productId" value=<%= product._id %>>
     <button type="submit">Añadir al carrito</button>
   </form>
+  <% } %>
   <a href="/productos">Volver a la tienda</a>
 </body>
 </html>

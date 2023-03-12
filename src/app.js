@@ -9,13 +9,16 @@ import { cartRouter } from "./routes/cart.router.js";
 import { orderRouter } from "./routes/order.router.js";
 import { notFoundMiddleware } from "./middlewares/notFoundMiddleware.js";
 import { messageRouter } from "./routes/message.router.js";
+import { serverRouter } from "./routes/server.router.js";
 import { Server } from "socket.io";
 import { getMessagesForSocket } from "./controllers/message.controller.js";
+import * as dotenv from "dotenv";
 
+dotenv.config();
 initDB();
 
 const app = express();
-const PORT = parseInt(process.argv.slice(2)) || 8080;
+const PORT = process.env.PORT || 8080;
 const server = app.listen(PORT, () => console.log(`Server up on port ${PORT}`));
 export const io = new Server(server)
 
@@ -49,4 +52,5 @@ app.use("/productos", productRouter);
 app.use("/carrito", cartRouter);
 app.use("/ordenes", orderRouter);
 app.use("/chat", messageRouter);
+app.use("/config", serverRouter)
 app.use(notFoundMiddleware)
