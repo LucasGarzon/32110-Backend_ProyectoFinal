@@ -62,13 +62,17 @@ export const createProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   const { id } = req.params;
-  const { field, value } = req.body;
+  let { field, value } = req.body;
   try {
     if (!field || !value) {
       return res.status(404).json({ message: "Some body data is missing" });
     }
+    if (field === "stock" || field === "price" || field === "category") {
+      value = parseInt(value)
+ 
+    }
     const result = await productService.updateProduct(id, field, value);
-    res.status(201).json({ message: "Product updated successfully", product: result });
+    res.redirect(303, `/productos/${id}`);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

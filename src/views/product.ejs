@@ -7,19 +7,78 @@
   <title>Proyecto Final | Product</title>
 </head>
 <body>
-  <h1><%= product.title %></h1>
-  <h2>Precio: $<%= product.price %></h2>
-  <% if (product.stock === 0) { %>
-    <h3>Stock: <span style="color: red;">SIN STOCK</span></h3>
-    <% } else {%>
-    <h3>Stock: <%= product.stock %> unidades</h3>
-  <% } %>
-  <p>Descripción: <%= product.description %></p>
-  <% if (user.isAdmin === true) { %>
-    <form id="delete-product-form">
-      <button type="button" id="delete-product-button" style="background-color: red; color: white;">Eliminar producto</button>
-    </form>
+  <div style="border: 2px solid #000000;">
     <br>
+    <img src="<%= product.thumbnail %>" alt="Foto de producto">
+    <h1><%= product.title %></h1>
+    <h2>Precio: $<%= product.price %></h2>
+    <% if (product.stock === 0) { %>
+      <h3>Stock: <span style="color: red;">SIN STOCK</span></h3>
+      <% } else {%>
+      <h3>Stock: <%= product.stock %> unidades</h3>
+    <% } %>
+    <% if (product.category === 1) { %>
+      <p>Categoría: Café de especialidad</p>
+    <% } else if (product.category === 2) { %>
+      <p>Categoría: Brebaje</p>
+    <% } %>
+    <p>Descripción: <%= product.description %></p>
+    <br>
+  </div>
+  <% if (user.isAdmin === true) { %>
+    <br>
+    <div style="border: 2px solid #000000;">
+      <br>
+      <form id="update-title-form">
+        <label for="stock">Actualizar Nombre</label>
+        <input type="hidden" name="field" value="title">
+        <input type="text" name="value">
+        <button type="submit">Actualizar</button>
+      </form>
+      <br>
+      <form id="update-price-form">
+        <label for="price">Actualizar Precio</label>
+        <input type="hidden" name="field" value="price">
+        <input type="number" name="value" min="1">
+        <button type="submit">Actualizar</button>
+      </form>
+      <br>
+      <form id="update-stock-form">
+        <label for="stock">Actualizar Stock</label>
+        <input type="hidden" name="field" value="stock">
+        <input type="number" name="value" min="0">
+        <button type="submit">Actualizar</button>
+      </form>
+      <br>
+      <form id="update-category-form">
+        <label for="price">Actualizar Categoría</label>
+        <input type="hidden" name="field" value="category">
+        <select name="value">
+          <option value="1">Café de especialidad</option>
+          <option value="2">Brebaje</option>
+        </select>
+        <button type="submit">Actualizar</button>
+      </form>
+      <br>
+      <form id="update-thumbnail-form">
+        <label for="price">Actualizar foto</label>
+        <input type="hidden" name="field" value="thumbnail">
+        <input type="text" name="value" placeholder="Inserte la URL...">
+        <button type="submit">Actualizar</button>
+      </form>
+      <br>
+      <form id="update-description-form">
+        <label for="stock">Actualizar Descripción</label>
+        <input type="hidden" name="field" value="description">
+        <input type="text" name="value">
+        <button type="submit">Actualizar</button>
+      </form>
+      <br>
+      <form id="delete-product-form">
+        <button type="button" id="delete-product-button" style="background-color: red; color: white;">Eliminar producto</button>
+      </form>
+      <br>
+    </div>
   <% } else {%>
     <form action="/carrito" method="post">
       <input type="hidden" name="userEmail" value=<%= user.email %>>
@@ -29,22 +88,93 @@
   <% } %>
   <a href="/productos">Volver a la tienda</a>
   <script>
-    const productId = "<%= product._id %>"
-    const deleteProductForm = document.getElementById("delete-product-form")
-    const deleteProductBtn = document.getElementById("delete-product-button")
+    const userAdmin = "<%= user.isAdmin %>"
 
-    deleteProductBtn.addEventListener("click", async () => {
-      try {
-        const response = await fetch(`/productos/${productId}`, { method: "DELETE" });
-        if (response.ok) {
-          window.location.href = "/productos";
-        } else {
-          console.error(`Delete product failed: ${response.statusText}`)
+    if (userAdmin === "true") {
+
+      //Delete Form
+      const productId = "<%= product._id %>"
+      const deleteProductForm = document.getElementById("delete-product-form")
+      const deleteProductBtn = document.getElementById("delete-product-button")
+
+      deleteProductBtn.addEventListener("click", async () => {
+        try {
+          const response = await fetch(`/productos/${productId}`, { method: "DELETE" });
+          if (response.ok) {
+            window.location.href = "/productos";
+          } else {
+            console.error(await response.json())
+          }
+        } catch (error) {
+          console.error(`Delete cart failed: ${error}`)
         }
-      } catch (error) {
-        console.error(`Delete cart failed: ${error}`)
+      })
+      
+      // Update Form
+      const updateTitleForm = document.getElementById("update-title-form");
+      const updateStockForm = document.getElementById("update-stock-form");
+      const updatePriceForm = document.getElementById("update-price-form")
+      const updateCategoryForm = document.getElementById("update-category-form")
+      const updateThumbnailForm = document.getElementById("update-thumbnail-form")
+      const updateDescriptionForm = document.getElementById("update-description-form")
+  
+      const updateData = async (data) => {
+        const formData = new FormData(data);
+        let obj = {}
+        formData.forEach((value, key) => obj[key]=value); 
+        const productId = "<%= product._id %>";
+        const url = `/productos/${productId}`;
+  
+        try {
+            const response = await fetch(url, {
+            method: "PUT",
+            body: JSON.stringify(obj),
+            headers: {
+              "Content-type": "application/json"
+            }
+          });
+  
+          if (response.ok) {
+            window.location.reload();
+          } else {
+            console.error(await response.json());
+          }
+        } catch (error) {
+          console.error(`Update stock failed: ${error}`);
+        }
       }
-    })
+  
+      updateTitleForm.addEventListener("submit", async (event) => {
+        event.preventDefault(); 
+        updateData(updateTitleForm)
+      });
+  
+      updateStockForm.addEventListener("submit", async (event) => {
+        event.preventDefault(); 
+        updateData(updateStockForm)
+      });
+  
+      updatePriceForm.addEventListener("submit", async (event) => {
+        event.preventDefault(); 
+        updateData(updatePriceForm)
+      });
+  
+      updateCategoryForm.addEventListener("submit", async (event) => {
+        event.preventDefault(); 
+        updateData(updateCategoryForm)
+      });
+      
+      updateThumbnailForm.addEventListener("submit", async (event) => {
+        event.preventDefault(); 
+        updateData(updateThumbnailForm)
+      });
+      
+      updateDescriptionForm.addEventListener("submit", async (event) => {
+        event.preventDefault(); 
+        updateData(updateDescriptionForm)
+      });
+    }
+
   </script>
 </body>
 </html>

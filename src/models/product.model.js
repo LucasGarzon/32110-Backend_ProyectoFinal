@@ -19,6 +19,7 @@ const ProductSchema = new Schema({
   stock: {
     type: Number,
     require: true,
+    min: 0,
   },
   category: {
     type: Number, 

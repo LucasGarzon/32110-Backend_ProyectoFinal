@@ -15,7 +15,7 @@
   <h2>Productos:</h2>
   <% products.forEach(product => { %>
     <div style="border: 2px solid #000000;" >
-      <p>Imagen: <%= product.thumbnail %><p>
+      <img src="<%= product.thumbnail %>" alt="Foto de producto">
       <ul style="list-style: none;">
         <li>Producto: <%= product.title %></li> 
         <li>Precio: $<%= product.price %></li>
@@ -78,7 +78,7 @@
     <h5><a href="/chat">Canal de Chat</a></h5>
     <% products.forEach(product => { %>
       <div style="border: 2px solid #000000;" >
-        <p>Imagen: <%= product.thumbnail %><p>
+        <img src="<%= product.thumbnail %>" alt="Foto de producto">
         <ul style="list-style: none;">
           <li>Producto: <%= product.title %></li> 
           <li>Precio: $<%= product.price %></li>
@@ -126,7 +126,7 @@
         if (response.ok) {
           window.location.reload()
         } else {
-          console.error(`Delete user failed: ${response.statusText}`)
+          console.error(await response.json())
         }
       } catch (error) {
         console.error(`Delete user failed: ${error}`)
