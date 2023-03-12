@@ -15,13 +15,36 @@
     <h3>Stock: <%= product.stock %> unidades</h3>
   <% } %>
   <p>Descripción: <%= product.description %></p>
-  <% if (user.isAdmin === false) { %>
-  <form action="/carrito" method="post">
-    <input type="hidden" name="userEmail" value=<%= user.email %>>
-    <input type="hidden" name="productId" value=<%= product._id %>>
-    <button type="submit">Añadir al carrito</button>
-  </form>
+  <% if (user.isAdmin === true) { %>
+    <form id="delete-product-form">
+      <button type="button" id="delete-product-button" style="background-color: red; color: white;">Eliminar producto</button>
+    </form>
+    <br>
+  <% } else {%>
+    <form action="/carrito" method="post">
+      <input type="hidden" name="userEmail" value=<%= user.email %>>
+      <input type="hidden" name="productId" value=<%= product._id %>>
+      <button type="submit">Añadir al carrito</button>
+    </form>  
   <% } %>
   <a href="/productos">Volver a la tienda</a>
+  <script>
+    const productId = "<%= product._id %>"
+    const deleteProductForm = document.getElementById("delete-product-form")
+    const deleteProductBtn = document.getElementById("delete-product-button")
+
+    deleteProductBtn.addEventListener("click", async () => {
+      try {
+        const response = await fetch(`/productos/${productId}`, { method: "DELETE" });
+        if (response.ok) {
+          window.location.href = "/productos";
+        } else {
+          console.error(`Delete product failed: ${response.statusText}`)
+        }
+      } catch (error) {
+        console.error(`Delete cart failed: ${error}`)
+      }
+    })
+  </script>
 </body>
 </html>
