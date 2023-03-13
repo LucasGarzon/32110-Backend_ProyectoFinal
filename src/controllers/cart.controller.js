@@ -11,7 +11,7 @@ export const getAllCarts = async (req, res) => {
       res.status(200).json(result)
     }
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(404).render('error', { message: error.message });
   }
 }; 
 
@@ -25,7 +25,7 @@ export const getCartByEmail = async (req, res) => {
       res.status(200).render('cart', {user: req.user, userCart: result})
     }
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(404).render('error', { message: error.message });
   }
 };
 
@@ -35,7 +35,7 @@ export const addToCart = async (req, res) => {
     const result = await cartService.addToCart(userEmail, productId)
     res.status(200).redirect('/productos');
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(404).render('error', { message: error.message });
   }
 };
 
@@ -43,12 +43,12 @@ export const deleteCart = async (req, res) => {
   try {
     const result = await cartService.deleteCart(req.user.email)
     if (!result) {
-      return res.status(404).json({ message: "Cart not found" });
+      return res.status(404).render('error', { message: "Cart not found" });
     } else {
       res.redirect(303, '/carrito');
     }    
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(404).render('error', { message: error.message });
   }
 };
 
@@ -58,6 +58,6 @@ export const removeItem = async (req, res) => {
     const result = await cartService.removeFromCart(userEmail, productId)
     res.status(200).redirect(`/carrito/${userEmail}`);
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(404).render('error', { message: error.message });
   }
 };

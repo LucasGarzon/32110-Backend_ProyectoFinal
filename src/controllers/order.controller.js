@@ -69,7 +69,7 @@ export const createOrder = async (req, res) => {
     });
     res.status(200).redirect('/productos');
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(404).render('error', { message: error.message });
   }
 };
 

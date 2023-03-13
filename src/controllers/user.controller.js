@@ -27,11 +27,13 @@ export const createUser = async (req, res) => {
 export const getUsers = async (req, res) => {
   try {
     const users = await userService.getUsers();
-    if (users.length === 0)
-      return res.status(200).json({ message: "BD don't have any User" });
-    res.status(200).json(users);
+    if (users.length === 0) {
+      return res.status(404).render('error', { message: "User db is empty" });
+    } else {
+      res.status(200).json(users);
+    }
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(404).render('error', { message: error.message });
   }
 };
 
@@ -56,20 +58,15 @@ export const deleteUser = async (req, res) => {
     }
     const deletedUser = await userService.deleteUser(id);
     if (!deletedUser) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).render('error', { message: "User not found" });
     } else {
       req.session.destroy(() => {
         res.redirect(303, "/login");
       });
     }
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(404).render('error', { message: error.message });
   }
-};
-
-export const logChecker = (req, res, next) => {
-  if (req.isAuthenticated()) return next()
-  res.redirect('/login')
 };
 
 export const userAuth = (req, res, next) => {
@@ -97,3 +94,13 @@ export const userLogOut = (req, res, next) => {
     res.redirect('/login');
   });
 };
+
+export const logChecker = (req, res, next) => {
+  if (req.isAuthenticated()) return next()
+  res.redirect('/login')
+};
+
+export const outlineChecker = (req, res, next) => {
+  if (!req.isAuthenticated()) return next();
+  res.redirect("/");
+}

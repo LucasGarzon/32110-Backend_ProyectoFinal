@@ -1,19 +1,22 @@
 import { Router } from "express";
-import { createUser, deleteUser, updateUser, userAuth, userLogOut, logChecker} from "../controllers/user.controller.js";
+import { createUser, deleteUser, updateUser, userAuth, userLogOut, logChecker, outlineChecker} from "../controllers/user.controller.js";
 
 const router = new Router();
 
+router.get("/", logChecker, (req, res) => {
+  res.redirect("/productos")
+})
 router.post("/", createUser);
-router.put("/:id", updateUser);
-router.delete("/:id", deleteUser);
-router.get("/signup", (req, res) => {
+router.put("/:id", logChecker, updateUser);
+router.delete("/:id", logChecker, deleteUser);
+router.get("/signup", outlineChecker, (req, res) => {
   res.render('signup')
 });
-router.get("/login", (req,res) => {
+router.get("/login", outlineChecker, (req,res) => {
   res.render('login')
 });
-router.post('/login', userAuth);
-router.get('/logout', userLogOut);
+router.post('/login', outlineChecker,userAuth);
+router.get('/logout', logChecker, userLogOut);
 
 const userRouter = router;
 export { userRouter };

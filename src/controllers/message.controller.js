@@ -7,7 +7,7 @@ export const getAllMessages = async (req, res) => {
     const result = await messageService.getAllMessages()
     res.status(200).render('chat', {messages: result, user: req.user})
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(404).render('error', { message: error.message });
   }
 };
 
@@ -17,7 +17,7 @@ export const getMessageByEmail = async (req, res) => {
     const result = await messageService.getMessageByEmail(email)
     res.status(200).render('chatUser', {messages: result})
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(404).render('error', { message: error.message });
   }
 }
 
@@ -44,7 +44,7 @@ export const createMessage = async (req, res) => {
     let result = await messageService.createMessage(newMessage)
     res.status(200).json(result)
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(404).render('error', { message: error.message });
   }  
 }
 
@@ -54,6 +54,6 @@ export const adminResponse = async (req, res) => {
     let result = await messageService.responseMessage(id, response)
     res.status(200).json(result)
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(404).render('error', { message: error.message });
   }
 }
