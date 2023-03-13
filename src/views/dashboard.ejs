@@ -13,9 +13,14 @@
   <h5><a href="/config">Configuración del servidor</a></h2>
   <h5><a href="/chat">Canal de Chat</a></h5>
   <h2>Productos:</h2>
+  <% if (products.length === 0) { %>
+    <h3 style="color: red;">No hay productos disponibles</h3>
+  <% } else { %>
   <% products.forEach(product => { %>
     <div style="border: 2px solid #000000;" >
-      <img src="<%= product.thumbnail %>" alt="Foto de producto">
+      <br>
+      <img src="<%= product.thumbnail %>" alt="Foto de producto" style="height: 200px;">
+      <br>
       <ul style="list-style: none;">
         <li>Producto: <%= product.title %></li> 
         <li>Precio: $<%= product.price %></li>
@@ -37,6 +42,8 @@
     </div>
     <br>
   <% }) %>
+  <h3><a href="/ordenes/admin">Administrar órdenes de compra</a></h3>
+  <% } %>
   <br>
   <div style="border: 2px solid #000000;">
     <h2>Ingresar un nuevo producto</h2>
@@ -77,8 +84,10 @@
     <h5>Dirección de entrega: <%= user.address %></h2>
     <h5><a href="/chat">Canal de Chat</a></h5>
     <% products.forEach(product => { %>
-      <div style="border: 2px solid #000000;" >
-        <img src="<%= product.thumbnail %>" alt="Foto de producto">
+      <div style="border: 2px solid #000000;">
+        <br>
+        <img src="<%= product.thumbnail %>" alt="Foto de producto" style="height: 200px;">
+        <br>
         <ul style="list-style: none;">
           <li>Producto: <%= product.title %></li> 
           <li>Precio: $<%= product.price %></li>
@@ -93,11 +102,13 @@
             <li>Categoría: Brebaje</li>
           <% } %>
         </ul>
+        <% if (product.stock > 0) { %>
         <form action="/carrito" method="post">
           <input type="hidden" name="userEmail" value=<%= user.email %>>
           <input type="hidden" name="productId" value=<%= product._id %>>
           <button type="submit">Añadir al carrito</button>
         </form>
+        <% } %>
         <% if (message === 1) { %>
           <p style="color: red">Superaste la cantidad en stock!</p>
         <% } %>
@@ -106,6 +117,8 @@
       <br>
     <% }) %>
     <a href="/carrito/<%= user.email %>">Carrito</a>
+    <br>
+    <a href="/ordenes">Ver mis órdenes de compra</a>
     <br>
   <% } %> 
   <a href="/logout">Cerar sesión</a> 

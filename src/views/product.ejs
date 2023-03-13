@@ -9,7 +9,8 @@
 <body>
   <div style="border: 2px solid #000000;">
     <br>
-    <img src="<%= product.thumbnail %>" alt="Foto de producto">
+    <img src="<%= product.thumbnail %>" alt="Foto de producto" style="height: 200px;">
+    <br>
     <h1><%= product.title %></h1>
     <h2>Precio: $<%= product.price %></h2>
     <% if (product.stock === 0) { %>
@@ -24,68 +25,71 @@
     <% } %>
     <p>Descripción: <%= product.description %></p>
     <br>
-  </div>
-  <% if (user.isAdmin === true) { %>
+    <% if (user.isAdmin === true) { %>
+      <br>
+      <div style="border: 2px solid #000000;">
+        <br>
+        <form id="update-title-form">
+          <label for="stock">Actualizar Nombre</label>
+          <input type="hidden" name="field" value="title">
+          <input type="text" name="value">
+          <button type="submit">Actualizar</button>
+        </form>
+        <br>
+        <form id="update-price-form">
+          <label for="price">Actualizar Precio</label>
+          <input type="hidden" name="field" value="price">
+          <input type="number" name="value" min="1">
+          <button type="submit">Actualizar</button>
+        </form>
+        <br>
+        <form id="update-stock-form">
+          <label for="stock">Actualizar Stock</label>
+          <input type="hidden" name="field" value="stock">
+          <input type="number" name="value" min="0">
+          <button type="submit">Actualizar</button>
+        </form>
+        <br>
+        <form id="update-category-form">
+          <label for="price">Actualizar Categoría</label>
+          <input type="hidden" name="field" value="category">
+          <select name="value">
+            <option value="1">Café de especialidad</option>
+            <option value="2">Brebaje</option>
+          </select>
+          <button type="submit">Actualizar</button>
+        </form>
+        <br>
+        <form id="update-thumbnail-form">
+          <label for="price">Actualizar foto</label>
+          <input type="hidden" name="field" value="thumbnail">
+          <input type="text" name="value" placeholder="Inserte la URL...">
+          <button type="submit">Actualizar</button>
+        </form>
+        <br>
+        <form id="update-description-form">
+          <label for="stock">Actualizar Descripción</label>
+          <input type="hidden" name="field" value="description">
+          <input type="text" name="value">
+          <button type="submit">Actualizar</button>
+        </form>
+        <br>
+        <form id="delete-product-form">
+          <button type="button" id="delete-product-button" style="background-color: red; color: white;">Eliminar producto</button>
+        </form>
+        <br>
+      </div>
+    <% } else {%>
+      <% if (product.stock > 0) { %>
+      <form action="/carrito" method="post">
+        <input type="hidden" name="userEmail" value=<%= user.email %>>
+        <input type="hidden" name="productId" value=<%= product._id %>>
+        <button type="submit">Añadir al carrito</button>
+      </form> 
+      <% } %> 
+    <% } %>
     <br>
-    <div style="border: 2px solid #000000;">
-      <br>
-      <form id="update-title-form">
-        <label for="stock">Actualizar Nombre</label>
-        <input type="hidden" name="field" value="title">
-        <input type="text" name="value">
-        <button type="submit">Actualizar</button>
-      </form>
-      <br>
-      <form id="update-price-form">
-        <label for="price">Actualizar Precio</label>
-        <input type="hidden" name="field" value="price">
-        <input type="number" name="value" min="1">
-        <button type="submit">Actualizar</button>
-      </form>
-      <br>
-      <form id="update-stock-form">
-        <label for="stock">Actualizar Stock</label>
-        <input type="hidden" name="field" value="stock">
-        <input type="number" name="value" min="0">
-        <button type="submit">Actualizar</button>
-      </form>
-      <br>
-      <form id="update-category-form">
-        <label for="price">Actualizar Categoría</label>
-        <input type="hidden" name="field" value="category">
-        <select name="value">
-          <option value="1">Café de especialidad</option>
-          <option value="2">Brebaje</option>
-        </select>
-        <button type="submit">Actualizar</button>
-      </form>
-      <br>
-      <form id="update-thumbnail-form">
-        <label for="price">Actualizar foto</label>
-        <input type="hidden" name="field" value="thumbnail">
-        <input type="text" name="value" placeholder="Inserte la URL...">
-        <button type="submit">Actualizar</button>
-      </form>
-      <br>
-      <form id="update-description-form">
-        <label for="stock">Actualizar Descripción</label>
-        <input type="hidden" name="field" value="description">
-        <input type="text" name="value">
-        <button type="submit">Actualizar</button>
-      </form>
-      <br>
-      <form id="delete-product-form">
-        <button type="button" id="delete-product-button" style="background-color: red; color: white;">Eliminar producto</button>
-      </form>
-      <br>
-    </div>
-  <% } else {%>
-    <form action="/carrito" method="post">
-      <input type="hidden" name="userEmail" value=<%= user.email %>>
-      <input type="hidden" name="productId" value=<%= product._id %>>
-      <button type="submit">Añadir al carrito</button>
-    </form>  
-  <% } %>
+  </div>
   <a href="/productos">Volver a la tienda</a>
   <script>
     const userAdmin = "<%= user.isAdmin %>"
@@ -174,7 +178,6 @@
         updateData(updateDescriptionForm)
       });
     }
-
   </script>
 </body>
 </html>

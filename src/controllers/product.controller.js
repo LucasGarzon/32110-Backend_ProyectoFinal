@@ -6,13 +6,9 @@ export const getAllProducts = async (req, res) => {
   const message = req.query.message;
   try {
     const result = await productService.getAllProducts();
-    if (result.length === 0) {
-      return res.status(200).json({ message: "BD don't have any Product" });
-    } else {
-      res.status(200).render('dashboard', {user: req.user, products: result, message})
-    }
+    res.status(200).render('dashboard', {user: req.user, products: result, message})
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(404).render('error', { message: error.message });
   }
 };
 
@@ -21,12 +17,12 @@ export const getProductById = async (req, res) => {
   try {
     const result = await productService.getProductById(id);
     if (!result) {
-      res.status(404).json({ message: "Product not found" });
+      res.status(404).render('error', { message: "Product not found" });
     } else {
       res.status(200).render('product', {user: req.user, product: result})
     }
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(404).render('error', { message: error.message });
   }
 };
 
@@ -35,12 +31,12 @@ export const getProductCategory = async (req, res) => {
   try {
     const result = await productService.getProductCategory(category);
     if (result.length === 0) {
-      res.status(200).json({ message: `There are no products in this category` });
+      res.status(404).render('error', { message: `There are no products in this category` });
     } else {
       res.status(200).json(result);
     }
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(404).render('error', { message: error.message });
   }
 };
 

@@ -1,13 +1,14 @@
 import { Router } from "express";
-import { createOrder, deleteOrder, getAllOrders, updateOrder } from "../controllers/order.controller.js";
+import { createOrder, deleteOrder, getAllOrders, getOrderByEmail, updateOrder } from "../controllers/order.controller.js";
 import { logChecker } from "../controllers/user.controller.js";
 
 const router = new Router()
 
-router.get('/', logChecker, getAllOrders)
-router.post('/', createOrder)
-router.put('/:id', updateOrder)
-router.delete('/:id', deleteOrder)
+router.get('/', logChecker, getOrderByEmail)
+router.get('/admin', logChecker, getAllOrders)
+router.post('/', logChecker, createOrder)
+router.put('/:id', logChecker, updateOrder)
+router.delete('/:id', logChecker, deleteOrder)
 
 const orderRouter = router;
 export { orderRouter }

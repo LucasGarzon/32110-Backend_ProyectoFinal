@@ -31,6 +31,11 @@ const cartSchema = new Schema({
         type: Number, 
         required: true,
       },
+      thumbnail: {
+        type: String,
+        require: true,
+        maxlength: 256,
+      },
     },
   ],
   total: {

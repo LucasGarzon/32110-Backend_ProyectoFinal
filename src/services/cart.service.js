@@ -19,14 +19,14 @@ export default class CartService {
     if (!user) throw new Error(`Email ${userEmail} doesn't exists`);
     if (!product) throw new Error(`Product id '${userEmail}' doesn't exists`)
     if (!result) {
-      return await Cart.create({ email: user.email, items: [{ productId, product: product.title, quantity: 1, price: product.price}], total: product.price, address: user.address, phone: user.phone})
+      return await Cart.create({ email: user.email, items: [{ productId, product: product.title, quantity: 1, price: product.price, thumbnail: product.thumbnail}], total: product.price, address: user.address, phone: user.phone})
     } else {
       const itemIndex = result.items.findIndex(item => item.productId.toString() === productId.toString());
       if (itemIndex >= 0) {
         if (result.items[itemIndex].quantity === product.stock ) return ({message: "Superaste la cantidad del stock"})
         result.items[itemIndex].quantity++;
       } else {
-        result.items.push({ productId, product: product.title, quantity: 1, price: product.price});
+        result.items.push({ productId, product: product.title, quantity: 1, price: product.price, thumbnail: product.thumbnail});
       };
       await result.save();
       return result;

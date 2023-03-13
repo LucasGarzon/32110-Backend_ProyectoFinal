@@ -7,16 +7,35 @@ const orderSevice = new OrderService();
 
 export const getAllOrders = async (req, res) => {
   try {
-    const result = await orderSevice.getAllOrders();
-    if (result.length === 0) {
-      res.status(200).json({ message: "BD don't have any cart" })
+    if (req.user.isAdmin) {
+      const result = await orderSevice.getAllOrders();
+      if (result.length === 0) {
+        res.status(404).render('error', { message: "BD don't have any order" });
+      } else {
+        res.status(200).render('adminOrders', {orders: result})
+      }
     } else {
-      res.status(200).json(result)
+      res.status(404).render('error', { message: "You don't have admin permissions" });
     }
+
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 };
+
+export const getOrderByEmail = async (req, res) => {
+  const { email } = req.user
+  try {
+    const result = await orderSevice.getOrderByEmail(email)
+    if (!result) {
+      res.status(404).render('error', { message: "BD don't have any order" });
+    } else {
+      res.status(200).render('orders', {orders: result})
+    }
+  } catch (error) {
+    res.status(404).render('error', { message: error.message });
+  }
+}
 
 export const createOrder = async (req, res) => {
   const { email } = req.body;

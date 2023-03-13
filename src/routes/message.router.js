@@ -6,8 +6,8 @@ const router = new Router();
 
 router.get('/', logChecker, getAllMessages); 
 router.get('/:email', logChecker, getMessageByEmail); 
-router.post('/', createMessage); 
-router.put('/:id', adminResponse); 
+router.post('/', logChecker, createMessage); 
+router.put('/:id', logChecker, adminResponse); 
 
 const messageRouter = router;
 export { messageRouter }

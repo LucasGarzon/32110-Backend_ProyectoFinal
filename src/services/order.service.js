@@ -7,6 +7,10 @@ export default class OrderService {
     return await Order.find()
   }
 
+  async getOrderByEmail(userEmail) {
+    return await Order.find({ email: userEmail })
+  }
+
   async createOrder(cartEmail) {
     const cart = await Cart.findOne({ email: cartEmail });
     if (!cart) {

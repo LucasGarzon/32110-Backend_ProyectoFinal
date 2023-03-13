@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto Final | Ordenes de compra</title>
+</head>
+<body>
+  <h1>Ordenes de compra</h1>
+  <% if (orders.length === 0) { %>
+    <h2>No tienes ninguna orden de compra</h2> 
+  <% } else { %>
+    <br>
+    <% orders.slice().reverse().forEach(data => { %>
+      <div style="border: 2px solid #000000;">
+        <h2>Orden Nro<%= data.orderNumber %></h2>
+        <h3>Fecha: <%= data.timestamp.getDate() %>/<%= data.timestamp.getMonth() + 1 %>/<%= data.timestamp.getFullYear() %></h3>
+        <ul>
+          <% data.items.forEach(product => { %>
+            <li><span style="color: green;">$</span><%= product.price %> = <%= product.quantity %>x <%= product.product %></li>
+          <% }) %>  
+        </ul>
+        <ul style="list-style: none;">
+          <li>Total: <span style="color: green;">$</span><%= data.total %></li>
+          <% if (data.status === "generated") { %>
+            <li>Estado: <span style="color: blue;">Generada ⌚</span></li>
+          <% } else if (data.status === "traveling") { %>
+            <li>Estado: <span style="color: yellowgreen;">En camino... 🚚</span></li>
+          <% } else if (data.status === "rejected") { %> 
+            <li>Estado: <span style="color: red;">Rechazada 😓</span></li>
+            <br>
+            <li><span style="color: red;">Por favor, contáctenos a través de correo electrónico o chat para obtener más detalles sobre su caso. ¡Gracias!</span></li>
+          <% } else if (data.status === "delivered") { %>   
+            <li>Estado: <span style="color: green;">¡Entregada! ✔️</span></li>
+          <% } %>
+        </ul>
+      </div>
+      <br>
+    <% }) %>  
+  <% } %>
+  <br>
+  <a href="/productos">Volver al Index</a>
+</body>
+</html>

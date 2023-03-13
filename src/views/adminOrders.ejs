@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto Final | Ordenes de compra</title>
+</head>
+<body>
+  <h1>Ordenes de compra | Administrador</h1>
+  <br>
+  <a href="/productos">Volver al Index</a>
+  <br>
+  <form id="update-order-form">
+  <% orders.slice().reverse().forEach(data => { %>
+    <div style="border: 2px solid #000000;">
+      <h2>Orden Nro<%= data.orderNumber %> | <%= data.timestamp.getDate() %>/<%= data.timestamp.getMonth() + 1 %>/<%= data.timestamp.getFullYear() %></h2>
+      <ul>
+        <% data.items.forEach(product => { %>
+          <li><span style="color: green;">$</span><%= product.price %> = <%= product.quantity %>x <%= product.product %></li>
+        <% }) %>  
+      </ul>
+      <ul style="list-style: none;">
+        <li>Total: <span style="color: green;">$</span><%= data.total %></li>
+        <% if (data.status === "generated") { %>
+          <li>Estado: <span style="color: blue;">Generada</span></li>
+        <% } else if (data.status === "traveling") { %>
+          <li>Estado: <span style="color: yellowgreen;">En camino...</span></li>
+        <% } else if (data.status === "rejected") { %> 
+          <li>Estado: <span style="color: red;">Rechazada</span></li>
+        <% } else if (data.status === "delivered") { %>   
+          <li>Estado: <span style="color: green;">¡Entregada!</span></li>
+        <% } %>
+      </ul>
+      <br>
+        <select name="newStatus" id="<%= data._id%>">
+          <option disabled selected value> Actualizar estado </option>
+          <option value="traveling">En camino...</option>
+          <option value="rejected">Rechazada</option>
+          <option value="delivered">Entregada</option>
+        </select>
+        <button type="submit" id="update-order-button" name="<%= data._id%>">Actualizar</button>
+    </div>
+    <br>
+  <% }) %>  
+  </form>
+  <br>
+  <script>
+    const updateOrderForm = document.getElementById("update-order-form")
+
+    updateOrderForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      let formData = new FormData(updateOrderForm)
+      const id = event.submitter["name"]
+      const newStatus = document.getElementById(id).value
+      const obj = {id, newStatus}
+      const route = `/ordenes/${id}`
+      try {
+        const response = await fetch(route, {
+          method: "PUT",
+          body: JSON.stringify(obj),
+          headers: {
+            "Content-type": "application/json"
+          }          
+        });
+
+        if (response.ok) {
+          window.location.reload();
+        } else {
+          console.error(await response.json());
+        }
+      } catch (error) {
+        console.error(`Update stock failed: ${error}`);
+      }
+
+    })
+  </script>
+</body>
+</html>
