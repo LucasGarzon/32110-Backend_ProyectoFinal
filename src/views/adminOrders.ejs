@@ -4,47 +4,115 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sono:wght@300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <title>Proyecto Final | Product</title>
+  <title>Proyecto Final | Ordenes de compra</title>
   <title>Proyecto Final | Ordenes de compra</title>
 </head>
 <body>
-  <h1>Ordenes de compra | Administrador</h1>
-  <br>
-  <a href="/productos">Volver al Index</a>
-  <br>
-  <form id="update-order-form">
-  <% orders.slice().reverse().forEach(data => { %>
-    <div style="border: 2px solid #000000;">
-      <h2>Orden Nro<%= data.orderNumber %> | <%= data.timestamp.getDate() %>/<%= data.timestamp.getMonth() + 1 %>/<%= data.timestamp.getFullYear() %></h2>
-      <ul>
-        <% data.items.forEach(product => { %>
-          <li><span style="color: green;">$</span><%= product.price %> = <%= product.quantity %>x <%= product.product %></li>
-        <% }) %>  
-      </ul>
-      <ul style="list-style: none;">
-        <li>Total: <span style="color: green;">$</span><%= data.total %></li>
-        <% if (data.status === "generated") { %>
-          <li>Estado: <span style="color: blue;">Generada</span></li>
-        <% } else if (data.status === "traveling") { %>
-          <li>Estado: <span style="color: yellowgreen;">En camino...</span></li>
-        <% } else if (data.status === "rejected") { %> 
-          <li>Estado: <span style="color: red;">Rechazada</span></li>
-        <% } else if (data.status === "delivered") { %>   
-          <li>Estado: <span style="color: green;">¡Entregada!</span></li>
-        <% } %>
-      </ul>
-      <br>
-        <select name="newStatus" id="<%= data._id%>">
-          <option disabled selected value> Actualizar estado </option>
-          <option value="traveling">En camino...</option>
-          <option value="rejected">Rechazada</option>
-          <option value="delivered">Entregada</option>
-        </select>
-        <button type="submit" id="update-order-button" name="<%= data._id%>">Actualizar</button>
+  <!-- navbar -->
+  <div class="conteiner-fluid navbar-container">
+    <nav class="navbar navbar-expand-lg bg-white col-12">
+      <div class="container-fluid d-flex justify-content-between">
+        <div>
+          <a class="navbar-brand" href="/">PROYECTO FINAL | BACKEND</a>
+        </div>
+        <div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Admin
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-left">
+                    <li><a class="dropdown-item" href="/config">Datos del servidor</a></li>
+                    <li><a class="dropdown-item" href="/ordenes/admin">Ordenes de compra</a></li>
+                    <li>
+                      <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="/logout">Cerar sesión</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/productos">Tienda</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/chat">Mensajes</a>
+                </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <!-- navbar -->
+  <div class="container">
+    <div class="row col-12">
+      <div class="alert alert-light m-3">
+        <h1>Ordenes de compra | Administrador 📦</h1>
+      </div>
     </div>
-    <br>
+  </div>
+  <% if (orders.length === 0) { %>
+    <div class="container">
+      <div class="row col-12">
+        <div class="alert alert-light m-3">
+          <h2>No tienes ninguna orden de compra 💔</h2>
+          <hr> 
+          <a class="btn btn-outline-primary" href="/productos">Volver a la tienda</a>
+        </div>
+      </div>
+    </div>
+  <% } else { %>
+  <% orders.slice().reverse().forEach(data => { %>  
+  <div class="container">
+    <div class="row col-12">
+      <div class="alert alert-light m-3">
+        <form id="update-order-form">
+          <h2>Orden Nro<%= data.orderNumber %> | <%= data.timestamp.getDate() %>/<%= data.timestamp.getMonth() + 1 %>/<%= data.timestamp.getFullYear() %></h2>
+          <hr>
+          <% data.items.forEach(product => { %>
+          <h4>$<%= product.price %> = <%= product.quantity %>x_<%= product.product %></h4>
+          <% }) %>
+          <hr>
+          <h4>Total: $<%= data.total %> 💴</h4>
+          <hr>
+          <% if (data.status === "generated") { %>
+          <h4>Estado: <span style="color: blue;">Generada ⌚</span></h4>
+          <% } else if (data.status === "traveling") { %>
+          <h4>Estado: <span style="color: yellowgreen;">En camino... 🚚</span></h4>
+          <% } else if (data.status === "rejected") { %>
+          <h4>Estado: <span style="color: red;">Rechazada 😓</h4>
+          <% } else if (data.status === "delivered") { %> 
+          <h4>Estado: <span style="color: green;">¡Entregada! ✔️</span></h4>
+          <% } %>  
+          <hr>
+          <div class="form-group">
+            <select class="form-control mt-3" name="newStatus" id="<%= data._id%>">
+              <option disabled selected value> Actualizar estado </option>
+              <option value="traveling">En camino...</option>
+              <option value="rejected">Rechazada</option>
+              <option value="delivered">Entregada</option>
+            </select>
+            <button class="btn btn-outline-primary mt-3" type="submit" id="update-order-button" name="<%= data._id%>">Actualizar</button>
+          </div>
+        </div>
+      </div>
+    </div>
   <% }) %>  
   </form>
-  <br>
+  <% } %>
   <script>
     const updateOrderForm = document.getElementById("update-order-form")
 
