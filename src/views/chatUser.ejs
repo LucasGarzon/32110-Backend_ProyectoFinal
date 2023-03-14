@@ -4,26 +4,108 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sono:wght@300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
   <title>Proyecto Final | Chat de usuario</title>
 </head>
 <body>
-  <h1>Estos son tus mensajes</h1>
+  <div class="conteiner-fluid navbar-container">
+    <nav class="navbar navbar-expand-lg bg-white col-12">
+      <div class="container-fluid d-flex justify-content-between">
+        <div>
+          <a class="navbar-brand" href="/">PROYECTO FINAL | BACKEND</a>
+        </div>
+        <div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="/carrito/<%= user.email %>">Carrito</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Usuario
+                </a>
+                <ul class="dropdown-menu dropdown-menu-left">
+                  <li><a class="dropdown-item" href="/carrito/<%= user.email %>">Carrito</a></li>
+                  <li><a class="dropdown-item" href="/ordenes">Ordenes de compra</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="/logout">Cerar sesión</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/productos">Tienda</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/chat">Mensajes</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <!-- navbar -->
+  <div class="container">
+    <div class="row col-12">
+      <div class="alert alert-light m-3">
+        <h1>Estos son tus mensajes</h1>
+      </div>
+    </div>
+  </div>
   <% if (!messages || messages.length === 0) { %>
-    <p>No hay mensajes para mostrar</p>
+  <div class="container">
+    <div class="row col-12">
+      <div class="alert alert-light m-3">
+        <h2>No hay mensajes para mostrar 💔</h2>
+        <hr>
+        <a class="btn btn-outline-primary" href="/productos">Volver a la tienda</a>
+      </div>
+    </div>
+  </div>
   <% } else { %>
-    <% messages.forEach(message => { %>
-      <ul style="border: 2px solid #000000;">
-        <% if (message.userType === "system") { %>
-          <li><span style="color: red;"><%= message.userType %>: </span> <%= message.email %></li>
-          <% } else { %>
-          <li><span style="color: blue;"><%= message.userType %>: </span> <%= message.email %></li> 
-        <% } %> 
-        <li><span style="color: blue;">Día: </span><%= message.timestamp.getDate() %>/<%= message.timestamp.getMonth() %>/<%= message.timestamp.getFullYear() %></li>
-        <li><span style="color: blue;">Hora: </span><%= message.timestamp.getHours() %>:<%= message.timestamp.getMinutes() %>hs</li>
-        <li><span style="color: blue;">Mensaje: </span><%= message.message %></li>
-      </ul>
-    <% }) %>
+  <% messages.slice().reverse().forEach(message => { %>
+  <% if (message.response) { %>
+  <div class="container d-flex justify-content-center">
+    <div class="row col-12">
+      <div class="alert alert-light m-auto mt-3">
+        <h3><span style="color: blue;"><%= message.email %></span> | <%= message.timestamp.getDate() %>/<%= message.timestamp.getMonth()+1 %>/<%= message.timestamp.getFullYear() %></h3>
+        <hr>
+        <h4><%= message.timestamp.getHours().toString().padStart(2, '0') %>:<%= message.timestamp.getMinutes().toString().padStart(2, '0') %>hs</h4>
+        <hr>
+        <h4>Mensaje:</h4>
+        <p><%= message.message %></p>
+        <hr>
+        <h4>Respuesta:</h4>
+        <p><span style="color: blue;"><%= message.response %></span></p>
+      </div>
+    </div>
+  </div>  
+  <% } else { %>
+  <div class="container d-flex justify-content-center">
+    <div class="row col-12">
+      <div class="alert alert-light m-auto mt-3 mb-3">
+        <h3><span style="color: blue;"><%= message.email %></span> | <%= message.timestamp.getDate() %>/<%= message.timestamp.getMonth()+1 %>/<%= message.timestamp.getFullYear() %></h3>
+        <hr>
+        <h4><%= message.timestamp.getHours().toString().padStart(2, '0') %>:<%= message.timestamp.getMinutes().toString().padStart(2, '0') %>hs</h4>
+        <hr>
+        <h4>Mensaje:</h4>
+        <p><%= message.message %></p>
+        <hr>
+      </div>
+    </div>
+  </div>    
+  <% } %> 
+  <% }) %>
   <% } %>
-  <a href="/chat">Volver al chat</a>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 </body>
 </html>

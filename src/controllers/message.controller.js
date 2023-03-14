@@ -15,7 +15,7 @@ export const getMessageByEmail = async (req, res) => {
   const { email } = req.user
   try {
     const result = await messageService.getMessageByEmail(email)
-    res.status(200).render('chatUser', {messages: result})
+    res.status(200).render('chatUser', {messages: result, user: req.user})
   } catch (error) {
     res.status(404).render('error', { message: error.message });
   }
