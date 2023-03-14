@@ -10,12 +10,12 @@ export const getAllOrders = async (req, res) => {
     if (req.user.isAdmin) {
       const result = await orderSevice.getAllOrders();
       if (result.length === 0) {
-        res.status(404).render('error', { message: "BD don't have any order" });
+        res.status(404).render('error', { message: "No hay órdenes de compra en nuestra base de datos" });
       } else {
         res.status(200).render('adminOrders', {orders: result})
       }
     } else {
-      res.status(404).render('error', { message: "You don't have admin permissions" });
+      res.status(404).render('error', { message: "¡Lo siento! Necesitas permiso de adminsitrador" });
     }
 
   } catch (error) {
@@ -28,7 +28,7 @@ export const getOrderByEmail = async (req, res) => {
   try {
     const result = await orderSevice.getOrderByEmail(email)
     if (!result) {
-      res.status(404).render('error', { message: "BD don't have any order" });
+      res.status(404).render('error', { message: "No hay órdenes de compra en nuestra base de datos" });
     } else {
       res.status(200).render('orders', {orders: result, user: req.user})
     }

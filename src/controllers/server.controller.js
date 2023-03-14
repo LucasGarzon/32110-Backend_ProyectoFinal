@@ -8,7 +8,7 @@ export const getInformation = async (req, res) => {
     const result = await serverInfo.getServerConfig()
     res.status(200).render('serverConfig', {serverInfo: result});
   } else {
-    res.status(400).render('error', {message: "You don't have admins permissions"});
+    res.status(400).render('error', {message: "Necesitas permisos de administrador para acceder a esta ruta"});
   }
 }
 

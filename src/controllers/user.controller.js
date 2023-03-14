@@ -28,7 +28,7 @@ export const getUsers = async (req, res) => {
   try {
     const users = await userService.getUsers();
     if (users.length === 0) {
-      return res.status(404).render('error', { message: "User db is empty" });
+      return res.status(404).render('error', { message: "No hay usuarios en la base de datos" });
     } else {
       res.status(200).json(users);
     }
@@ -42,7 +42,7 @@ export const updateUser = async (req, res) => {
   const { field, value } = req.body;
   const { email } = req.user
   try {
-    if (!field || !value) return res.status(404).json({ message: "Some body data is missing" });
+    if (!field || !value) return res.status(404).json({ message: "Revisa todos los campos antes de enviar la petición" });
     const result = await userService.updateUser(id, field, value);
     res.redirect(303, `/carrito/${email}`)
   } catch (error) {
@@ -59,7 +59,7 @@ export const deleteUser = async (req, res) => {
     }
     const deletedUser = await userService.deleteUser(id);
     if (!deletedUser) {
-      return res.status(404).render('error', { message: "User not found" });
+      return res.status(404).render('error', { message: "Usuario no encontrado" });
     } else {
       req.session.destroy(() => {
         res.redirect(303, "/login");

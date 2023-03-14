@@ -19,7 +19,7 @@ export default class ProductService {
 
   async updateProduct(id, field, value) {
     const product = await Product.findById(id);
-    if (!product) throw new Error(`Product with id ${id} not found`);
+    if (!product) throw new Error(`No se ha encontrado un producto con id ${id}`);
     product[field] = value;
     await product.save();
     return product;

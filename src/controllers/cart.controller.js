@@ -6,7 +6,7 @@ export const getAllCarts = async (req, res) => {
   try {
     const result = await cartService.getAllCarts()
     if (result.length === 0) {
-      res.status(200).json({ message: "BD don't have any cart" })
+      res.status(200).json({ message: "No existen carritos en nuestra base de datos" })
     } else {
       res.status(200).json(result)
     }
@@ -43,7 +43,7 @@ export const deleteCart = async (req, res) => {
   try {
     const result = await cartService.deleteCart(req.user.email)
     if (!result) {
-      return res.status(404).render('error', { message: "Cart not found" });
+      return res.status(404).render('error', { message: "No hemos encontrado el carrito" });
     } else {
       res.redirect(303, '/carrito');
     }    

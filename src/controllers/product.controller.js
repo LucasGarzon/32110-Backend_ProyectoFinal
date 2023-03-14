@@ -17,12 +17,16 @@ export const getProductById = async (req, res) => {
   try {
     const result = await productService.getProductById(id);
     if (!result) {
-      res.status(404).render('error', { message: "Product not found" });
+      res.status(404).render('error', { message: "¡Lo sentimos! No hemos encontrado el producto 😵" });
     } else {
       res.status(200).render('product', {user: req.user, product: result})
     }
   } catch (error) {
-    res.status(404).render('error', { message: error.message });
+    if (error.path === "_id") {
+      res.status(404).render('error', { message: "¡Lo sentimos! No hemos encontrado el producto 😵" });
+    } else {
+      res.status(404).render('error', { message: error.message });
+    }
   }
 };
 
@@ -31,7 +35,7 @@ export const getProductCategory = async (req, res) => {
   try {
     const result = await productService.getProductCategory(category);
     if (result.length === 0) {
-      res.status(404).render('error', { message: `There are no products in this category` });
+      res.status(404).render('error', { message: `No existen productos en esta categoría` });
     } else {
       res.status(200).json(result);
     }
@@ -61,7 +65,7 @@ export const updateProduct = async (req, res) => {
   let { field, value } = req.body;
   try {
     if (!field || !value) {
-      return res.status(404).json({ message: "Some body data is missing" });
+      return res.status(404).json({ message: "Verifica todos los campos. Faltaron argumentos" });
     }
     if (field === "stock" || field === "price" || field === "category") {
       value = parseInt(value)
@@ -79,9 +83,9 @@ export const deleteProduct = async (req, res) => {
   try {
     const result = await productService.deleteProduct(id);
     if (!result) {
-      return res.status(404).json({ message: "Product not found" });
+      return res.status(404).json({ message: `Producto con id ${id} no existe en nuestra base de datos` });
     } else {
-      res.status(200).json({ message: "Product deleted successfully" });
+      res.status(200).json({ message: "Producto eliminado correctamente" });
     }
   } catch (error) {
     res.status(400).json({ message: error.message });
