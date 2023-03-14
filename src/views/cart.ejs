@@ -60,6 +60,24 @@
       <div class="alert alert-light m-3">
         <h1>Carrito de compras</h1>
         <h4>Enviar a: <span style="color: green;"><%= user.address %></span></h4>
+        <hr>
+        <p>
+          <a class="btn btn-outline-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Actualizar dirección de entrega
+          </a>
+        </p>
+        <div class="collapse" id="collapseExample">
+          <div class="card card-body">
+            <form id="update-address-form">
+              <div class="form-group">
+                <input type="hidden" name="id" value="<%=user._id%>">
+                <input type="hidden" name="field" value="address">
+                <input type="text" class="form-control mt-3" name="value" required>
+                <button type="submit" class="btn btn-primary mt-3" id="update-address-button">Actualizar</button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -120,6 +138,8 @@
     const userEmail = "<%= user.email %>";
     const deleteCartForm = document.getElementById("delete-cart-form");
     const deleteCartBtn = document.getElementById("delete-cart-button");
+    const updateaddressForm = document.getElementById("update-address-form")
+    const updateaddressBtn = document.getElementById("update-address-button")
 
     deleteCartBtn.addEventListener("click", async () => {
       try {
@@ -132,6 +152,34 @@
       } catch (error) {
         console.error(`Delete cart failed: ${error}`)
       }
+    });
+
+    updateaddressBtn.addEventListener("click", async () => {
+      event.preventDefault()
+      const formData = new FormData(updateaddressForm)
+      let obj = {}
+      formData.forEach((value, key) => obj[key] = value);
+      if (obj.value === "") {
+        return alert("Completa el campo de texto para actualizar la dirección de correo")
+      }
+      try {
+        const response = await fetch(`/${obj.id}`, {
+          method: "PUT",
+          body: JSON.stringify(obj),
+          headers: {
+            "Content-type": "application/json"
+          }
+        });
+
+        if (response.ok) {
+          window.location.reload();
+        } else {
+          console.error(await response.json());
+        };
+
+      } catch (error) {
+        console.error(`Update stock failed: ${error}`);
+      };
     });
   </script>
 </body>
