@@ -8,7 +8,7 @@ export const getAllCarts = async (req, res) => {
     if (result.length === 0) {
       res.status(200).json({ message: "No existen carritos en nuestra base de datos" })
     } else {
-      res.status(200).json(result)
+      res.status(200).redirect(`/carrito/${req.user.email}`)
     }
   } catch (error) {
     res.status(404).render('error', { message: error.message });
@@ -18,6 +18,9 @@ export const getAllCarts = async (req, res) => {
 export const getCartByEmail = async (req, res) => {
   const { email } = req.params;
   try {
+    if (req.user.isAdmin) {
+      res.status(404).render('error', { message: "Ruta no valida para administradores" });
+    }
     const result = await cartService.getCartByEmail(email);
     if (!result) {
       res.status(200).render('cart', {user: req.user, userCart: false})
