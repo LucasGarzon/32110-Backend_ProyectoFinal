@@ -8,7 +8,7 @@ body {
   overflow-x: hidden;
 }
 
-.login-container-div {
+.login-container-div, .error-alert-view, .server-info-container {
   height: 100vh;
   font-family: 'Sono', sans-serif;
 }
@@ -41,6 +41,7 @@ background-color: white;
   background-size: 20px 20px;
 }
 
-.server-info-container {
-  height: 100%;
+
+li {
+  word-wrap: break-word;
 }

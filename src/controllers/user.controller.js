@@ -53,7 +53,7 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
-    const userCart = await cartService.getCartById(req.user.email)
+    const userCart = await cartService.getCartByEmail(req.user.email)
     if (userCart) {
       await cartService.deleteCart(req.user.email);
     }
@@ -66,7 +66,7 @@ export const deleteUser = async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(404).render('error', { message: error.message });
+    res.status(404).json({ error: error.message });
   }
 };
 

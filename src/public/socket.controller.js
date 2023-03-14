@@ -12,6 +12,9 @@ const handleSubmit = (evt, form, route) => {
   if (!messageId) {
     method = "POST"
     formData.forEach((value, key) => obj[key]=value);
+    if (obj.message === "") {
+      return alert("Debes rellenar el campo antes de enviar un mensaje")
+    }
     socketEvent = route.slice(1);
   } else {
     method = evt.submitter.name
