@@ -45,9 +45,9 @@ export const getProductCategory = async (req, res) => {
 };
 
 export const createProduct = async (req, res) => {
-  req.body.price = parseInt(req.body.price) 
+  req.body.price = parseFloat(req.body.price) 
   req.body.stock = parseInt(req.body.stock) 
-  req.body.category = parseInt(req.body.category) 
+  req.body.category = parseInt(req.body.category).toFixed(2) 
   try {
     const newProduct = await productService.createProduct(req.body);
     if (newProduct) {
@@ -68,8 +68,7 @@ export const updateProduct = async (req, res) => {
       return res.status(404).json({ message: "Verifica todos los campos. Faltaron argumentos" });
     }
     if (field === "stock" || field === "price" || field === "category") {
-      value = parseInt(value)
- 
+      value = parseFloat(value).toFixed(2)
     }
     const result = await productService.updateProduct(id, field, value);
     res.redirect(303, `/productos/${id}`);
