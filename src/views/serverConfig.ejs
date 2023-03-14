@@ -4,19 +4,74 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sono:wght@300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <title>Proyecto Final | Product</title>
   <title>Proyecto Final | Server Config</title>
 </head>
 <body>
-  <h1>Configuración de servidor</h1>
-  <ul>
-    <li><span style="color: green;">Puerto de escucha del Servidor</span>: <%= serverInfo.serverPort %></li>
-    <li><span style="color: green;">URL de la base de datos</span>: <%= serverInfo.dataBaseURL %></li>
-    <li><span style="color: green;">Tiempo de expiración de la sesión</span>: <%= serverInfo.sessionTime %>min</li>
-    <li><span style="color: green;">Email para las notificaciones del BackEnd</span>: <%= serverInfo.adminEmail %></li>
-    <li><span style="color: green;">PID</span>: <%= serverInfo.pid %></li>
-    <li><span style="color: green;">Path</span>: <%= serverInfo.path %></li>
-    <li><span style="color: green;">Logical Processors</span>: <%= serverInfo.cpuCores %></li>
-  </ul>
-  <h2><a href="/productos">Volver al Index</a></h2>
+  <!-- navbar -->
+  <div class="conteiner-fluid navbar-container">
+    <nav class="navbar navbar-expand-lg bg-white col-12">
+      <div class="container-fluid d-flex justify-content-between">
+        <div>
+          <a class="navbar-brand" href="/">PROYECTO FINAL | BACKEND</a>
+        </div>
+        <div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Admin
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-left">
+                    <li><a class="dropdown-item" href="/config">Datos del servidor</a></li>
+                    <li><a class="dropdown-item" href="/ordenes/admin">Ordenes de compra</a></li>
+                    <li>
+                      <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="/logout">Cerar sesión</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/productos">Tienda</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/chat">Mensajes</a>
+                </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <!-- navbar -->
+  <div class="container">
+    <div class="row">
+      <div class="alert alert-light mt-3 p-5 server-info-container">
+        <h1 class="text-center">Configuración del servidor</h1>
+        <ul class="list-group mt-3 p-3">
+          <li class="list-group-item"><span style="color: blue;">Puerto de escucha del Servidor</span>: <%= serverInfo.serverPort %></li>
+          <li class="list-group-item"><span style="color: blue;">URL de la base de datos</span>: <%= serverInfo.dataBaseURL %></li>
+          <li class="list-group-item"><span style="color: blue;">Tiempo de expiración de la sesión</span>: <%= serverInfo.sessionTime %>min</li>
+          <li class="list-group-item"><span style="color: blue;">Email para las notificaciones del BackEnd</span>: <%= serverInfo.adminEmail %></li>
+          <li class="list-group-item"><span style="color: blue;">PID</span>: <%= serverInfo.pid %></li>
+          <li class="list-group-item"><span style="color: blue;">Path</span>: <%= serverInfo.path %></li>
+          <li class="list-group-item"><span style="color: blue;">Logical Processors</span>: <%= serverInfo.cpuCores %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 </body>
 </html>

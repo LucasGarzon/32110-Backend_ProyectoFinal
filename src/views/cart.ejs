@@ -5,41 +5,117 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Proyecto Final | Cart</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sono:wght@300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <title>Proyecto Final | Product</title>
 </head>
 <body>
-  <h1>Carrito</h1>
-  <h4>Dirección de entrega: <span style="color: green;"><%= user.address %></span></h4>
+  <div class="conteiner-fluid navbar-container">
+    <nav class="navbar navbar-expand-lg bg-white col-12">
+      <div class="container-fluid d-flex justify-content-between">
+        <div>
+          <a class="navbar-brand" href="/">PROYECTO FINAL | BACKEND</a>
+        </div>
+        <div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="/carrito/<%= user.email %>">Carrito</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Usuario
+                </a>
+                <ul class="dropdown-menu dropdown-menu-left">
+                  <li><a class="dropdown-item" href="/carrito/<%= user.email %>">Carrito</a></li>
+                  <li><a class="dropdown-item" href="/ordenes">Ordenes de compra</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="/logout">Cerar sesión</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/productos">Tienda</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/chat">Mensajes</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <!-- navbar -->
+  <div class="container">
+    <div class="row col-12">
+      <div class="alert alert-light m-3">
+        <h1>Carrito de compras</h1>
+        <h4>Enviar a: <span style="color: green;"><%= user.address %></span></h4>
+      </div>
+    </div>
+  </div>
   <% if (!userCart || userCart.length === 0) { %>
-    <p>No hay elementos en el carrito</p>
+  <div class="container">
+    <div class="row col-12">
+      <div class="alert alert-light m-3">
+        <h2>No hay elementos en el carrito 🙃</h2>
+        <hr>
+        <a class="btn btn-outline-primary" href="/productos">Volver a la tienda</a>
+      </div>
+    </div>
+  </div>
   <% } else { %>
-    <% userCart.items.forEach(product => { %>
-      <div style="border: 2px solid #000000;">
-        <br>
+  <% userCart.items.forEach(product => { %>
+  <div class="container">
+    <div class="row col-12">
+      <div class="alert alert-light m-3">
         <img src="<%= product.thumbnail %>" alt="Foto de producto" style="height: 200px;">
-        <br>
-        <ul style="list-style: none;">
-          <li>Producto: <%= product.product %></li> 
-          <li>Precio: $<%= product.price %></li> 
-          <li>Cantidad: <%= product.quantity %></li> 
-        </ul>
+        <h4><%= product.product %></h4>
+        <hr>
+        <h4>$<%= product.price %> 💴</h4>
+        <h4>X<%= product.quantity %></h4>
+        <hr>
         <form action="/carrito/remove" method="post">
-          <input type="hidden" name="userEmail" value=<%= user.email %>>
-          <input type="hidden" name="productId" value=<%= product.productId %>>
-          <button type="submit">Eliminar del carrito</button>
+          <div class="form-group">
+            <input type="hidden" name="userEmail" value=<%= user.email %>>
+            <input type="hidden" name="productId" value=<%= product.productId %>>
+            <button type="submit" class="btn btn-primary">Eliminar del carrito</button>
+          </div>
+        </form>
+      </div>  
+    </div>
+  </div>
+  <% }) %>
+  <div class="container">
+    <div class="row col-12">
+      <div class="alert alert-light m-3">
+        <h2>Total: $<%= userCart.total %></h2>
+        <form action="/ordenes" method="post">
+          <div class="form-group mt-3">
+            <input type="hidden" name="email" value="<%= user.email %>">
+            <button type="submit" class="btn btn-primary">Confirmar Compra</button>
+          </div>
+        </form>
+        <hr>
+        <form id="delete-cart-form">
+          <div class="form-group">
+            <button type="button" id="delete-cart-button" class="btn btn-outline-danger">Vaciar Carrito</button>
+          </div>
         </form>
       </div>
-      <br>
-    <% }) %>
-    <form id="delete-cart-form">
-      <button type="button" id="delete-cart-button">Vaciar Carrito</button>
-    </form>
-    <form action="/ordenes" method="post">
-      <input type="hidden" name="email" value="<%= user.email %>">
-      <button type="submit">Confirmar Compra</button>
-    </form>
-    <h2>Total: $<%= userCart.total %></h2>
+    </div>
+  </div>
   <% } %>
-  <a href="/productos">Volver al Dashboard</a>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
   <script>
     const userEmail = "<%= user.email %>";
     const deleteCartForm = document.getElementById("delete-cart-form");

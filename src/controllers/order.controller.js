@@ -30,7 +30,7 @@ export const getOrderByEmail = async (req, res) => {
     if (!result) {
       res.status(404).render('error', { message: "BD don't have any order" });
     } else {
-      res.status(200).render('orders', {orders: result})
+      res.status(200).render('orders', {orders: result, user: req.user})
     }
   } catch (error) {
     res.status(404).render('error', { message: error.message });

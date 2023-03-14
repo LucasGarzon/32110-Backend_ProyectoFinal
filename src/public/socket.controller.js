@@ -40,58 +40,84 @@ socket.on('messagesHistory', data => {
     let messagesHistory = document.getElementById("messagesHistory")
     let html = '';
     const userType = document.getElementById("userType").value
-    data.forEach((message) => {
+    data.slice().reverse().forEach((message) => {
       const date = new Date(message.timestamp); 
       let minutes = date.getMinutes().toString().padStart(2, '0');
+      let hour = date.getHours().toString().padStart(2, '0');
       if (userType === "false") {
         if (message.response) {
           html += `
-            <ul style="border: 2px solid #000000;">
-              <li><span style="color: blue;">Usuario: </span>${message.email}</li>
-              <li><span style="color: blue;">Día: </span>${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}</li>
-              <li><span style="color: blue;">Hora: </span>${date.getHours()}:${minutes}hs</li>
-              <li><span style="color: blue;">Mensaje: </span>${message.message}</li>
-              <li><span style="color: red;">Respuesta: </span>${message.response}</li>
-            </ul>
+            <div class="container d-flex justify-content-center">
+              <div class="row col-12">
+                <div class="alert alert-light m-auto mt-3">
+                  <h3><span style="color: blue;">${message.email}</span> | ${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}</h3>
+                  <hr>
+                  <h4>${hour}:${minutes}hs</h4>
+                  <hr>
+                  <h4>Mensaje:</h4>
+                  <p>${message.message}</p>
+                  <hr>
+                  <h4>Respuesta:</h4>
+                  <p><span style="color: blue;">${message.response}</span></p>
+                </div>
+              </div>
+            </div>
           `
         } else {
           html += `
-            <ul style="border: 2px solid #000000;">
-              <li><span style="color: blue;">Usuario: </span>${message.email}</li>
-              <li><span style="color: blue;">Día: </span>${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}</li>
-              <li><span style="color: blue;">Hora: </span>${date.getHours()}:${minutes}hs</li>
-              <li><span style="color: blue;">Mensaje: </span>${message.message}</li>
-            </ul>
-          `          
+          <div class="container d-flex justify-content-center">
+            <div class="row col-12">
+              <div class="alert alert-light m-auto mt-3">
+                <h3><span style="color: blue;">${message.email}</span> | ${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}</h3>
+                <hr>
+                <h4>${hour}:${minutes}hs</h4>
+                <hr>
+                <h4>Mensaje:</h4>
+                <p>${message.message}</p>
+              </div>
+            </div>
+          </div>
+        `          
         }
       } else {
         if (message.response) {
           html += `
-          <div style="border: 2px solid #000000;">
-            <ul>
-              <li><span style="color: blue;">Usuario: </span>${message.email}</li>
-              <li><span style="color: blue;">Día: </span>${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}</li>
-              <li><span style="color: blue;">Hora: </span>${date.getHours()}:${minutes}hs</li>
-              <li><span style="color: blue;">Mensaje: </span>${message.message}</li>
-              <li><span style="color: Red;">Respuesta: </span>${message.response}</li>
-            </ul>
+          <div class="container d-flex justify-content-center">
+            <div class="row col-12">
+              <div class="alert alert-light m-auto mt-3">
+                <h3><span style="color: blue;">${message.email}</span> | ${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}</h3>
+                <hr>
+                <h4>${hour}:${minutes}hs</h4>
+                <hr>
+                <h4>Mensaje:</h4>
+                <p>${message.message}</p>
+                <hr>
+                <h4>Respuesta:</h4>
+                <p><span style="color: blue;">${message.response}</span></p>
+              </div>
+            </div>
           </div>
-          <br>
-        `      
+        `
         } else {
           html += `
-          <div style="border: 2px solid #000000;">
-            <ul>
-              <li><span style="color: blue;">Usuario: </span>${message.email}</li>
-              <li><span style="color: blue;">Día: </span>${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}</li>
-              <li><span style="color: blue;">Hora: </span>${date.getHours()}:${minutes}hs</li>
-              <li><span style="color: blue;">Mensaje: </span>${message.message}</li>
-            </ul>
-            <input type="text" name="respose_${message._id}" id="id_${message._id}" placeholder="Escriba una respuesta">
-            <button name="PUT" value="${message._id}" id="submit_${message._id}">Enviar</button>
-          </div>
-          <br>
-        `    
+            <div class="container d-flex justify-content-center">
+              <div class="row col-12">
+                <div class="alert alert-light m-auto mt-3">
+                  <h3><span style="color: blue;">${message.email}</span> | ${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}</h3>
+                  <hr>
+                  <h4>${hour}:${minutes}hs</h4>
+                  <hr>
+                  <h4>Mensaje:</h4>
+                  <p>${message.message}</p>
+                  <hr>
+                  <div class="form-group">
+                    <input class="mt-3 form-control" type="text" name="respose_${message._id}" id="id_${message._id}" placeholder="Escriba una respuesta">
+                    <button class="mt-3 btn btn-primary" name="PUT" value="${message._id}" id="submit_${message._id}">Enviar una respuesta</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `    
         }
       }
     });
