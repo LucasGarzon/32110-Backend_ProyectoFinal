@@ -20,6 +20,17 @@ Los usuarios pueden ser creados a través del formulario de la ruta "/signup" o 
 
 Para crear un usuario administrador, primero se debe crear un usuario regular. Luego, es necesario modificar manualmente el atributo "isAdmin" del usuario de "false" a "true". Esta acción se puede llevar a cabo mediante una petición en ThunderClient o accediendo directamente a la base de datos.
 
+# ¿Qué variables de entorno necesito para correr el servidor?
+
+- PORT : Número del puerto de escucha del servidor.
+- MONGO_URI : URL de la base de datos.
+- COOKIE_KEY : Nombre de la cookie utilizada para identificar la sesión. 
+- COOKIE_SECRET : Firma de la cookie de sesión 
+- SESSION_TIME : Tiempo de duración de la sesión. Expresada en milisegundos.
+- ADMIN_EMAIL : Correo del administrador desde donde se envían las notificaciones del servidor. 
+- PASS_EMAIL :  Contraseña para la autenticación SMTP. En este caso, para la plataforma de correo electrónico de Google, Gmail.
+
+
 # A continuación se muestran las distintas rutas disponibles con sus funcionalidades para los distintos tipos de usuarios. 
 
 ## Ruta: "/"
