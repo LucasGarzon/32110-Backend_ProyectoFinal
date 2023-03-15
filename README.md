@@ -12,6 +12,17 @@
 - Para el servicio de correo electrónico (nodemailer), se ha decidido tener un único correo de administrador, almacenado en una variable de entorno. Otra opción podría haber sido buscar en la base de datos todos los usuarios cuya propiedad "isAdmin" devuelva el booleano "true", extraer cada correo electrónico y enviarles a todos el mismo correo con copia oculta.
 - Para acceder a todas las funcionalidades del Front-end es necesario contar con dos tipos de usuarios: usuarios regulares y usuarios administradores.
 
+# ¿Cómo puedo correr el servidor?
+
+Node:
+```
+npm start
+```
+Nodemon:
+```
+npm run dev
+```
+
 # ¿Cómo se crea un Usuario Regular?
 
 Los usuarios pueden ser creados a través del formulario de la ruta "/signup" o mediante el envío de una petición "POST" en ThunderClient.
