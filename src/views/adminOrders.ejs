@@ -80,8 +80,10 @@
         <form id="update-order-form">
           <h2>Orden Nro<%= data.orderNumber %> | <%= data.timestamp.getDate() %>/<%= data.timestamp.getMonth() + 1 %>/<%= data.timestamp.getFullYear() %></h2>
           <hr>
+          <h4>Email de contacto: <%= data.email %></h4>
+          <hr>
           <% data.items.forEach(product => { %>
-          <h4>$<%= product.price %> = <%= product.quantity %>x_<%= product.product %></h4>
+          <h4><%= product.quantity %> x $<%= product.price %> = <%= product.product %></h4>
           <% }) %>
           <hr>
           <h4>Total: $<%= data.total %> 💴</h4>

@@ -86,11 +86,12 @@
         <hr>
         <% if (data.status === "generated") { %>
         <h4>Estado: <span style="color: blue;">Generada ⌚</span></h4>
+        <p><span style="color: blue;">¡Muchas gracias por tu compra! 💖 Pronto te contactaremos al correo electrónico que registraste para coordinar la entrega.</span></p>
         <% } else if (data.status === "traveling") { %>
         <h4>Estado: <span style="color: yellowgreen;">En camino... 🚚</span></h4>
         <% } else if (data.status === "rejected") { %>
-        <h4>Estado: <span style="color: red;">Rechazada 😓</h4>
-        <p><span style="color: red;">Por favor, contáctenos a través de correo electrónico o chat para obtener más detalles sobre su caso. ¡Gracias!</span></p>
+        <h4>Estado: <span style="color: red;">Cancelada 😓</h4>
+        <p><span style="color: red;">Si no cancelaste esta compra, por favor contáctanos a través de correo electrónico o mediante el chat de la plataforma para obtener más detalles sobre el caso. ¡Gracias!</span></p>
         <% } else if (data.status === "delivered") { %> 
         <h4>Estado: <span style="color: green;">¡Entregada! ✔️</span></h4>
         <% } %>

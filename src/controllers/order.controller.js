@@ -48,8 +48,9 @@ export const createOrder = async (req, res) => {
     await transporter.sendMail({
       from: process.env.ADMIN_MAIL,
       to: email,
-      subject: `¡Tienes una orden de compra de ${req.user.first_name} ${req.user.last_name}!`,
+      subject: `¡Orden de compra generada!`,
       html: `
+        <h2 style="color: blue;">Orden de compra Nro${result.orderNumber}</h2>
         <h2 style="color: blue;">Carrito:</h2>
         <ul>
           <li>Items:</li>
